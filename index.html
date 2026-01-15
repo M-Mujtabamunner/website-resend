@@ -3,238 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTRA-MODERN-BLOCKCHAIN-AI-SYNERGY-2026</title>
+    <title>MUJTABA'S WORTHLESS WEB - THE FINAL BOSS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&display=swap');
-
-        :root {
-            --cursor-x: 0px;
-            --cursor-y: 0px;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Space+Mono&display=swap');
 
         body {
-            font-family: 'Space+Grotesk', sans-serif;
-            background: #050505;
+            background: #000;
             color: #fff;
+            font-family: 'Space Mono', monospace;
+            cursor: none;
             overflow-x: hidden;
-            cursor: none; /* We will provide a custom, delayed cursor */
+            transition: filter 0.5s;
         }
 
-        /* The "Delayed" Cursor to frustrate the user */
         #custom-cursor {
-            width: 20px;
-            height: 20px;
-            background: #00ff00;
-            border-radius: 50%;
+            width: 40px; height: 40px;
+            border: 3px solid #ff0055;
             position: fixed;
             pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            transition: transform 0.2s ease-out;
+            z-index: 99999;
+            transition: width 0.3s, height 0.3s;
         }
 
-        .section {
-            min-height: 100vh;
-            padding: 100px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid #222;
+        .page { display: none; min-height: 100vh; padding: 100px 20px; }
+        .page.active { display: flex; flex-direction: column; align-items: center; }
+
+        /* The "Fainting" Effect */
+        .fainted { filter: brightness(10) grayscale(1); pointer-events: none; }
+
+        .glitch-btn {
+            background: #ff0055;
+            padding: 20px 40px;
+            font-family: 'Unbounded';
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            transition: 0.1s;
         }
 
-        /* Navigation that runs away */
-        .nav-item {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: inline-block;
+        .glitch-btn:hover {
+            transform: skewX(-20deg);
+            background: #00f2ff;
+            color: #000;
         }
 
-        /* Modern Gradient Text */
-        .gradient-text {
-            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            background-size: 200% auto;
-            animation: gradient 3s linear infinite;
+        .input-nightmare {
+            background: transparent;
+            border: 2px solid #333;
+            padding: 15px;
+            width: 300px;
+            margin: 10px;
+            text-align: center;
         }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        .moving-input {
-            transition: transform 0.1s;
-        }
-
-        /* The "Loading" bar that never finishes */
-        .infinite-loader {
-            width: 100%;
-            height: 4px;
-            background: #111;
+        #stock-ticker {
             position: fixed;
-            top: 0;
-            z-index: 1000;
-        }
-        .infinite-loader-fill {
-            height: 100%;
-            background: #00ff00;
-            width: 0%;
-            animation: load 60s infinite;
-        }
-        @keyframes load {
-            0% { width: 0%; }
-            50% { width: 99%; }
-            95% { width: 99.1%; }
-            100% { width: 0%; }
-        }
-
-        .shake { animation: shake 0.5s infinite; }
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            bottom: 0;
+            width: 100%;
+            background: red;
+            color: white;
+            white-space: nowrap;
+            padding: 10px;
         }
     </style>
 </head>
-<body>
+<body onscroll="checkSpeed()">
 
 <div id="custom-cursor"></div>
-<div class="infinite-loader"><div class="infinite-loader-fill"></div></div>
 
-<nav class="fixed top-0 w-full p-6 flex justify-between z-50 mix-blend-difference">
-    <div class="text-2xl font-bold">SYNERGY_OS</div>
-    <div class="space-x-8" id="nav-container">
-        <a href="#hero" class="nav-item">Solution</a>
-        <a href="#features" class="nav-item">Ecosystem</a>
-        <a href="#form-section" class="nav-item">Join Presale</a>
-        <a href="#ai-section" class="nav-item">AI Oracle</a>
-        <a href="#footer" class="nav-item">Whitepaper</a>
+<nav class="fixed top-0 w-full p-6 flex justify-between z-[100] bg-black/50 backdrop-blur-xl border-b border-white/10">
+    <div class="text-xl font-black">MUJTABA_V8.exe</div>
+    <div class="flex gap-6" id="nav-links">
+        <button onclick="navTo('home')" class="hover:line-through">ORIGIN</button>
+        <button onclick="navTo('portal')" class="hover:line-through">THE_VOID</button>
+        <button onclick="navTo('data')" class="hover:line-through">GIVE_DATA</button>
+        <button onclick="navTo('market')" class="hover:line-through">MISERY_INDEX</button>
+        <button onclick="navTo('win')" class="hover:line-through">CLAIM_PRIZE</button>
     </div>
 </nav>
 
-<section id="hero" class="section">
-    <h1 class="text-8xl font-black gradient-text text-center mb-4">REIMAGINE<br>NOTHING.</h1>
-    <p class="text-gray-400 text-xl max-w-2xl text-center">
-        The first decentralized platform that actively prevents you from doing anything productive. 
-        Powered by <span class="shake inline-block text-red-500">Confusion-as-a-Service</span>.
-    </p>
-    <button class="mt-8 px-8 py-4 border border-white hover:bg-white hover:text-black transition-all" onclick="alert('Action denied. Please click harder.')">
-        ENTER THE VOID
-    </button>
-</section>
+<div id="home" class="page active">
+    <h1 class="text-[12vw] font-black leading-none text-center">NOTHING<br>WORKS.</h1>
+    <p class="text-zinc-500 mt-10">You are browsing the world's most optimized disappointment.</p>
+    <div class="mt-20 animate-bounce">↓ SCROLL TO FAIL ↓</div>
+</div>
 
-<section id="features" class="section bg-[#0a0a0a]">
-    <h2 class="text-4xl mb-20">CORE INCONVENIENCES</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl">
-        <div class="p-8 border border-gray-800 hover:border-pink-500">
-            <h3 class="text-xl font-bold mb-4">Quantum Un-usability</h3>
-            <p class="text-gray-500">Our buttons only exist when you aren't looking at them. Observe them, and they collapse into a state of "Unclickable."</p>
+<div id="portal" class="page">
+    <h2 class="text-5xl font-black mb-10">AI CONSCIOUSNESS CHECK</h2>
+    <div id="webcam-mock" class="w-80 h-60 bg-zinc-900 border-4 border-dashed border-zinc-700 flex items-center justify-center text-xs text-center p-4">
+        [ CAMERA FEED BLOCKED ]<br>REASON: USER LOOKS TOO SMUG
+    </div>
+    <p class="mt-6 text-red-500" id="ai-comment">Analyzing your soul...</p>
+    <button class="glitch-btn mt-10" onclick="resetAI()">CALIBRATE REALITY</button>
+</div>
+
+<div id="data" class="page">
+    <h2 class="text-4xl font-black mb-4">MANDATORY SURVEY</h2>
+    <p class="mb-10 text-zinc-400">Step 1 of 8,402</p>
+    <input type="text" placeholder="Enter Birthplace of Great-Grandmother" class="input-nightmare" oninput="moveInput(this)">
+    <input type="range" class="w-64 mt-10" oninput="changeBrightness(this)">
+    <p class="text-[8px] mt-4 text-zinc-600">Slide to adjust your social standing</p>
+    <button class="mt-10 opacity-10 hover:opacity-100 transition-opacity">DO NOT CLICK THIS</button>
+</div>
+
+<div id="market" class="page">
+    <h2 class="text-4xl font-black mb-10">LIVE MISERY INDEX</h2>
+    <div class="grid grid-cols-2 gap-4 w-full max-w-2xl">
+        <div class="p-10 border border-white/20 text-center">
+            <div class="text-xs text-zinc-500">USER FRUSTRATION</div>
+            <div class="text-4xl font-black text-green-400">↑ 420%</div>
         </div>
-        <div class="p-8 border border-gray-800 hover:border-blue-500">
-            <h3 class="text-xl font-bold mb-4">6G Latency</h3>
-            <p class="text-gray-500">We artificially slow down every interaction by 1.5 seconds to simulate the feeling of being underwater.</p>
-        </div>
-        <div class="p-8 border border-gray-800 hover:border-green-500">
-            <h3 class="text-xl font-bold mb-4">AI Sentiment Rejection</h3>
-            <p class="text-gray-500">Our AI analyzes your mouse movements. If it detects frustration, it deletes your progress to teach you patience.</p>
+        <div class="p-10 border border-white/20 text-center">
+            <div class="text-xs text-zinc-500">TIME WASTED</div>
+            <div id="timer" class="text-4xl font-black">00:00</div>
         </div>
     </div>
-</section>
-
-<section id="form-section" class="section">
-    <h2 class="text-4xl mb-8">IDENTITY VERIFICATION</h2>
-    <div class="bg-white text-black p-10 rounded-3xl w-full max-w-lg shadow-[0_0_50px_rgba(255,255,255,0.2)]">
-        <label class="block mb-2 font-bold">What is your favorite color? (Specify in CMYK)</label>
-        <input type="text" class="w-full border-b-2 border-black p-2 mb-6 outline-none" placeholder="C:0 M:100 Y:0 K:0">
-        
-        <label class="block mb-2 font-bold">Proof of Humanity: Move this slider to exactly 73.45%</label>
-        <input type="range" min="0" max="100" step="0.01" class="w-full mb-2" id="slider">
-        <div id="slider-val" class="text-xs text-right">Current: 0.00%</div>
-
-        <button id="runaway-submit" class="mt-6 w-full bg-black text-white py-4 rounded-full font-bold transition-all">
-            VERIFY MY EXISTENCE
-        </button>
+    <div class="mt-20 w-full bg-white text-black p-4 font-black overflow-hidden">
+        <marquee scrollamount="20">BUY LOW SELL HIGH BUY LOW SELL HIGH THE INTERNET IS A TUBE THE INTERNET IS A TUBE</marquee>
     </div>
-</section>
+</div>
 
-<section id="ai-section" class="section bg-white text-black">
-    <h2 class="text-6xl font-black mb-12">THE AI IS JUDGING YOU</h2>
-    <div id="ai-chat" class="text-3xl font-light italic max-w-4xl text-center">
-        "I am watching your cursor. It looks... clumsy. Have you considered a better desk mat?"
+<div id="win" class="page">
+    <h1 class="text-6xl font-black text-center">YOU DESERVE THE WIN</h1>
+    <p class="mt-10">Click the button below to claim your 100% Real Prize.</p>
+    <div id="prize-container" style="position:relative; width: 100%; height: 200px;">
+        <button id="prize-btn" class="glitch-btn absolute left-1/2 -translate-x-1/2">CLAIM NOW</button>
     </div>
-</section>
+</div>
 
-<section id="footer" class="section">
-    <p class="text-xs text-gray-700 mb-4">© 2026 No Rights Reserved. Made with Zero Love.</p>
-    <div class="flex gap-4">
-        <a href="#" class="nav-item opacity-20">Privacy Policy</a>
-        <a href="#" class="nav-item opacity-20">Terms of Torture</a>
-        <a href="#" class="nav-item opacity-20">Delete My Computer</a>
-    </div>
-</section>
+<div id="stock-ticker">
+    BREAKING: MUJTABA DECLARES THIS WEBSITE "TOO FUNCTIONAL" — UPDATE PENDING — NO ONE IS SAFE — 
+</div>
 
 <script>
     const cursor = document.getElementById('custom-cursor');
-    const navItems = document.querySelectorAll('.nav-item');
-    const runawayBtn = document.getElementById('runaway-submit');
-    const slider = document.getElementById('slider');
-    const sliderVal = document.getElementById('slider-val');
-    const aiChat = document.getElementById('ai-chat');
+    const prizeBtn = document.getElementById('prize-btn');
+    let clickCount = 0;
+    let lastScrollTop = 0;
 
-    // 1. Laggy Custom Cursor
+    // 1. THE CURSOR TAX & DELAY
     document.addEventListener('mousemove', (e) => {
         setTimeout(() => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-        }, 100); // 100ms delay to drive people crazy
+        }, 150); // Massive input lag
     });
 
-    // 2. Navigation that flees
-    navItems.forEach(item => {
-        item.addEventListener('mouseover', () => {
-            item.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(${Math.random() * 20 - 10}deg)`;
-            item.style.color = '#' + Math.floor(Math.random()*16777215).toString(16);
-        });
+    document.addEventListener('click', () => {
+        clickCount++;
+        cursor.style.width = (40 + (clickCount * 10)) + 'px';
+        cursor.style.height = (40 + (clickCount * 10)) + 'px';
+        if(clickCount > 15) clickCount = 0; // Reset
     });
 
-    // 3. The Runaway Submit Button
-    runawayBtn.addEventListener('mouseover', () => {
-        runawayBtn.style.transform = `translate(${Math.random() * 400 - 200}px, ${Math.random() * 400 - 200}px)`;
-        runawayBtn.innerText = "NOT HERE!";
-    });
+    // 2. QUANTUM NAVIGATION
+    function navTo(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        
+        // 30% chance to go to a random page instead of the one clicked
+        const pages = ['home', 'portal', 'data', 'market', 'win'];
+        const actualPage = Math.random() < 0.3 ? pages[Math.floor(Math.random()*pages.length)] : pageId;
+        
+        document.getElementById(actualPage).classList.add('active');
+        
+        // Scramble the nav buttons
+        const nav = document.getElementById('nav-links');
+        const btns = Array.from(nav.children);
+        btns.sort(() => Math.random() - 0.5);
+        btns.forEach(b => nav.appendChild(b));
+    }
 
-    // 4. Slider Logic (Impossible to hit 73.45)
-    slider.addEventListener('input', (e) => {
-        let val = parseFloat(e.target.value);
-        if (val > 73 && val < 74) {
-            e.target.value = val + 0.5; // Jump over the target
+    // 3. BIOMETRIC SCROLL (FAINTING)
+    function checkSpeed() {
+        let st = window.pageYOffset || document.documentElement.scrollTop;
+        if (Math.abs(st - lastScrollTop) > 100) {
+            document.body.classList.add('fainted');
+            setTimeout(() => document.body.classList.remove('fainted'), 2000);
         }
-        sliderVal.innerText = `Current: ${e.target.value}%`;
+        lastScrollTop = st <= 0 ? 0 : st;
+    }
+
+    // 4. THE RUNAWAY PRIZE BUTTON
+    prizeBtn.addEventListener('mouseover', () => {
+        prizeBtn.style.left = Math.random() * 80 + '%';
+        prizeBtn.style.top = Math.random() * 150 + 'px';
+        prizeBtn.innerText = "NOT SO FAST";
     });
 
-    // 5. AI Oracle Insults
-    const insults = [
-        "Your scrolling speed suggests high anxiety.",
-        "Stop looking for the 'Contact' page. We don't want to talk to you.",
-        "Is that what you're wearing today? Interesting.",
-        "Your click accuracy is 12%. My toaster is more precise.",
-        "Loading more disappointment... please wait."
-    ];
+    // 5. INPUT NIGHTMARE
+    function moveInput(el) {
+        el.style.transform = `translateX(${Math.random() * 50}px) rotate(${Math.random() * 10 - 5}deg)`;
+        if(el.value.length > 10) {
+            el.value = "WRONG";
+            alert("Typos detected in your DNA. Please restart computer.");
+        }
+    }
+
+    // 6. MISERY TIMER
+    let seconds = 0;
     setInterval(() => {
-        aiChat.innerText = `"${insults[Math.floor(Math.random() * insults.length)]}"`;
-    }, 4000);
+        seconds++;
+        let m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        let s = (seconds % 60).toString().padStart(2, '0');
+        document.getElementById('timer').innerText = `${m}:${s}`;
+    }, 1000);
 
-    // 6. Random Scroll Jacking
-    window.addEventListener('scroll', () => {
-        if (Math.random() > 0.98) {
-            window.scrollBy({ top: -500, behavior: 'smooth' });
-            alert("SCROLL LIMIT REACHED. Please purchase the Premium Scroll Pack.");
-        }
-    });
-
+    // 7. AI INSULTS
+    const insults = ["You're clicking like a bot.", "Nice eyes. Can I have them?", "Error 404: User Brain Not Found.", "I'm telling your ISP about this."];
+    function resetAI() {
+        document.getElementById('ai-comment').innerText = insults[Math.floor(Math.random()*insults.length)];
+    }
 </script>
 
 </body>
