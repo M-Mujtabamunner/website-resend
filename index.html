@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME TO H3LL - BEST WEBISTE 2026</title>
+    <style>
+        /* CSS FROM NIGHTMARES */
+        body {
+            background-color: #ff00ff;
+            color: #00ff00;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym46.cur'), auto;
+            overflow-x: hidden;
+        }
+
+        marquee {
+            font-size: 3rem;
+            background: yellow;
+            color: red;
+            border: 5px dashed blue;
+        }
+
+        nav {
+            background: black;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: underline;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .page {
+            display: none;
+            padding: 50px;
+            height: 2000px; /* Unnecessary scrolling */
+            text-align: center;
+        }
+
+        .active { display: block; }
+
+        /* The Runaway Button */
+        #runaway-btn {
+            position: absolute;
+            padding: 15px 30px;
+            background: red;
+            color: white;
+            font-weight: bold;
+            transition: 0.1s;
+        }
+
+        .useless-toggle-container {
+            margin: 50px auto;
+            width: 100px;
+            height: 50px;
+            background: #ccc;
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        #toggle-knob {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            transition: 0.3s;
+        }
+
+        .evil-target {
+            width: 50px;
+            height: 50px;
+            background: black;
+            color: white;
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: crosshair;
+        }
+
+        input {
+            transform: rotate(2deg);
+            margin: 10px;
+            font-size: 20px;
+        }
+
+        .ad-popup {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: yellow;
+            border: 10px solid red;
+            padding: 20px;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+<marquee>!!! YOU ARE VISITOR #00000001 !!! CONGRATULATIONS !!!</marquee>
+
+<nav id="main-nav">
+    <a onclick="showPage('home')">HOME</a>
+    <a onclick="showPage('about')">ABOUT</a>
+    <a onclick="showPage('contact')">CONTACT</a>
+    <a onclick="showPage('secrets')">SECRETS</a>
+    <a onclick="showPage('win')">WIN PRIZE</a>
+</nav>
+
+<div id="home" class="page active">
+    <h1>WELCOME TO THE FUTURE OF WEB 0.1</h1>
+    <p>This website is optimized for Netscape Navigator 1.0</p>
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJtZzRyc3R6eHpxYmR6Z3R6eHpxYmR6Z3R6eHpxYmR6Z3R6eHpxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxK9y3UByo/giphy.gif" width="200">
+    <h2>Click the toggle to turn off the music (there is no music)</h2>
+    <div class="useless-toggle-container" id="toggle-box">
+        <div id="toggle-knob"></div>
+    </div>
+</div>
+
+<div id="about" class="page">
+    <h1>ABOUT US</h1>
+    <p style="font-size: 0.1rem;">We are a company that likes small text. You can't read this, can you? It's proprietary information. Stop trying to zoom in. It won't help.</p>
+    <div style="transform: scale(5);">I AM BIG TEXT</div>
+</div>
+
+<div id="contact" class="page">
+    <h1>CONTACT FORM (99% SECURE)</h1>
+    <form id="bad-form">
+        <input type="text" placeholder="Your Social Security Number"><br>
+        <input type="email" placeholder="Your Mother's Maiden Name"><br>
+        <p>Try to submit. I dare you.</p>
+        <button type="button" id="runaway-btn">SUBMIT FORM</button>
+    </form>
+</div>
+
+<div id="secrets" class="page">
+    <h1>EVIL CAPTCHA</h1>
+    <p>Prove you are not a robot by clicking this dot 10 times. It's very easy.</p>
+    <div id="captcha-zone" style="height: 300px; position: relative; border: 1px solid black;">
+        <div id="target" class="evil-target">0/10</div>
+    </div>
+</div>
+
+<div id="win" class="page">
+    <h1>YOU WON!!!</h1>
+    <p>To claim your Useless Box, please fax a handwritten letter to the moon.</p>
+    <div id="glitch-text"></div>
+</div>
+
+<div class="ad-popup">
+    <b>HOT SINGLES IN YOUR AREA WANT TO LEARN HTML!</b>
+    <button onclick="this.parentElement.style.display='none'">[X] CLOSE (Doesn't work)</button>
+</div>
+
+<script>
+    // PAGE SWITCHER & NAV SCRAMBLER
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        
+        // Scramble Navigation
+        const nav = document.getElementById('main-nav');
+        for (let i = nav.children.length; i >= 0; i--) {
+            nav.appendChild(nav.children[Math.random() * i | 0]);
+        }
+    }
+
+    // RUNAWAY BUTTON LOGIC
+    const btn = document.getElementById('runaway-btn');
+    document.addEventListener('mousemove', (e) => {
+        const btnRect = btn.getBoundingClientRect();
+        const distance = Math.hypot(e.clientX - (btnRect.left + btnRect.width/2), e.clientY - (btnRect.top + btnRect.height/2));
+        
+        if (distance < 100) {
+            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        }
+    });
+
+    // EVIL CAPTCHA LOGIC
+    let score = 0;
+    const target = document.getElementById('target');
+    target.addEventListener('mouseover', () => {
+        target.style.left = Math.random() * 90 + '%';
+        target.style.top = Math.random() * 90 + '%';
+    });
+    target.addEventListener('click', () => {
+        score++;
+        target.innerText = score + "/10";
+        if(score >= 10) {
+            alert("ERROR: System busy. Try again in 400 years.");
+            score = 0;
+            target.innerText = "0/10";
+        }
+    });
+
+    // USELESS TOGGLE
+    const toggleBox = document.getElementById('toggle-box');
+    const knob = document.getElementById('toggle-knob');
+    toggleBox.addEventListener('mouseenter', () => {
+        toggleBox.style.marginTop = Math.random() * 500 + 'px';
+        toggleBox.style.marginLeft = Math.random() * 80 + '%';
+    });
+
+    // FORM RESET RANDOMIZER
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            if (Math.random() > 0.95) {
+                input.value = "";
+                alert("Oops! I dropped your data. Please start over.");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
