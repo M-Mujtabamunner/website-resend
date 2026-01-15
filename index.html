@@ -3,225 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WELCOME TO H3LL - BEST WEBISTE 2026</title>
+    <title>ULTRA-MODERN-BLOCKCHAIN-AI-SYNERGY-2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* CSS FROM NIGHTMARES */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&display=swap');
+
+        :root {
+            --cursor-x: 0px;
+            --cursor-y: 0px;
+        }
+
         body {
-            background-color: #ff00ff;
-            color: #00ff00;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym46.cur'), auto;
+            font-family: 'Space+Grotesk', sans-serif;
+            background: #050505;
+            color: #fff;
             overflow-x: hidden;
+            cursor: none; /* We will provide a custom, delayed cursor */
         }
 
-        marquee {
-            font-size: 3rem;
-            background: yellow;
-            color: red;
-            border: 5px dashed blue;
-        }
-
-        nav {
-            background: black;
-            padding: 20px;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: underline;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .page {
-            display: none;
-            padding: 50px;
-            height: 2000px; /* Unnecessary scrolling */
-            text-align: center;
-        }
-
-        .active { display: block; }
-
-        /* The Runaway Button */
-        #runaway-btn {
-            position: absolute;
-            padding: 15px 30px;
-            background: red;
-            color: white;
-            font-weight: bold;
-            transition: 0.1s;
-        }
-
-        .useless-toggle-container {
-            margin: 50px auto;
-            width: 100px;
-            height: 50px;
-            background: #ccc;
-            border-radius: 25px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        #toggle-knob {
-            width: 40px;
-            height: 40px;
-            background: white;
+        /* The "Delayed" Cursor to frustrate the user */
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: #00ff00;
             border-radius: 50%;
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            transition: 0.3s;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease-out;
         }
 
-        .evil-target {
-            width: 50px;
-            height: 50px;
-            background: black;
-            color: white;
-            position: absolute;
-            border-radius: 50%;
+        .section {
+            min-height: 100vh;
+            padding: 100px 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            cursor: crosshair;
+            border-bottom: 1px solid #222;
         }
 
-        input {
-            transform: rotate(2deg);
-            margin: 10px;
-            font-size: 20px;
+        /* Navigation that runs away */
+        .nav-item {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
         }
 
-        .ad-popup {
+        /* Modern Gradient Text */
+        .gradient-text {
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: gradient 3s linear infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .moving-input {
+            transition: transform 0.1s;
+        }
+
+        /* The "Loading" bar that never finishes */
+        .infinite-loader {
+            width: 100%;
+            height: 4px;
+            background: #111;
             position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: yellow;
-            border: 10px solid red;
-            padding: 20px;
-            z-index: 999;
+            top: 0;
+            z-index: 1000;
+        }
+        .infinite-loader-fill {
+            height: 100%;
+            background: #00ff00;
+            width: 0%;
+            animation: load 60s infinite;
+        }
+        @keyframes load {
+            0% { width: 0%; }
+            50% { width: 99%; }
+            95% { width: 99.1%; }
+            100% { width: 0%; }
+        }
+
+        .shake { animation: shake 0.5s infinite; }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
         }
     </style>
 </head>
 <body>
 
-<marquee>!!! YOU ARE VISITOR #00000001 !!! CONGRATULATIONS !!!</marquee>
+<div id="custom-cursor"></div>
+<div class="infinite-loader"><div class="infinite-loader-fill"></div></div>
 
-<nav id="main-nav">
-    <a onclick="showPage('home')">HOME</a>
-    <a onclick="showPage('about')">ABOUT</a>
-    <a onclick="showPage('contact')">CONTACT</a>
-    <a onclick="showPage('secrets')">SECRETS</a>
-    <a onclick="showPage('win')">WIN PRIZE</a>
+<nav class="fixed top-0 w-full p-6 flex justify-between z-50 mix-blend-difference">
+    <div class="text-2xl font-bold">SYNERGY_OS</div>
+    <div class="space-x-8" id="nav-container">
+        <a href="#hero" class="nav-item">Solution</a>
+        <a href="#features" class="nav-item">Ecosystem</a>
+        <a href="#form-section" class="nav-item">Join Presale</a>
+        <a href="#ai-section" class="nav-item">AI Oracle</a>
+        <a href="#footer" class="nav-item">Whitepaper</a>
+    </div>
 </nav>
 
-<div id="home" class="page active">
-    <h1>WELCOME TO THE FUTURE OF WEB 0.1</h1>
-    <p>This website is optimized for Netscape Navigator 1.0</p>
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJtZzRyc3R6eHpxYmR6Z3R6eHpxYmR6Z3R6eHpxYmR6Z3R6eHpxJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxK9y3UByo/giphy.gif" width="200">
-    <h2>Click the toggle to turn off the music (there is no music)</h2>
-    <div class="useless-toggle-container" id="toggle-box">
-        <div id="toggle-knob"></div>
+<section id="hero" class="section">
+    <h1 class="text-8xl font-black gradient-text text-center mb-4">REIMAGINE<br>NOTHING.</h1>
+    <p class="text-gray-400 text-xl max-w-2xl text-center">
+        The first decentralized platform that actively prevents you from doing anything productive. 
+        Powered by <span class="shake inline-block text-red-500">Confusion-as-a-Service</span>.
+    </p>
+    <button class="mt-8 px-8 py-4 border border-white hover:bg-white hover:text-black transition-all" onclick="alert('Action denied. Please click harder.')">
+        ENTER THE VOID
+    </button>
+</section>
+
+<section id="features" class="section bg-[#0a0a0a]">
+    <h2 class="text-4xl mb-20">CORE INCONVENIENCES</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl">
+        <div class="p-8 border border-gray-800 hover:border-pink-500">
+            <h3 class="text-xl font-bold mb-4">Quantum Un-usability</h3>
+            <p class="text-gray-500">Our buttons only exist when you aren't looking at them. Observe them, and they collapse into a state of "Unclickable."</p>
+        </div>
+        <div class="p-8 border border-gray-800 hover:border-blue-500">
+            <h3 class="text-xl font-bold mb-4">6G Latency</h3>
+            <p class="text-gray-500">We artificially slow down every interaction by 1.5 seconds to simulate the feeling of being underwater.</p>
+        </div>
+        <div class="p-8 border border-gray-800 hover:border-green-500">
+            <h3 class="text-xl font-bold mb-4">AI Sentiment Rejection</h3>
+            <p class="text-gray-500">Our AI analyzes your mouse movements. If it detects frustration, it deletes your progress to teach you patience.</p>
+        </div>
     </div>
-</div>
+</section>
 
-<div id="about" class="page">
-    <h1>ABOUT US</h1>
-    <p style="font-size: 0.1rem;">We are a company that likes small text. You can't read this, can you? It's proprietary information. Stop trying to zoom in. It won't help.</p>
-    <div style="transform: scale(5);">I AM BIG TEXT</div>
-</div>
+<section id="form-section" class="section">
+    <h2 class="text-4xl mb-8">IDENTITY VERIFICATION</h2>
+    <div class="bg-white text-black p-10 rounded-3xl w-full max-w-lg shadow-[0_0_50px_rgba(255,255,255,0.2)]">
+        <label class="block mb-2 font-bold">What is your favorite color? (Specify in CMYK)</label>
+        <input type="text" class="w-full border-b-2 border-black p-2 mb-6 outline-none" placeholder="C:0 M:100 Y:0 K:0">
+        
+        <label class="block mb-2 font-bold">Proof of Humanity: Move this slider to exactly 73.45%</label>
+        <input type="range" min="0" max="100" step="0.01" class="w-full mb-2" id="slider">
+        <div id="slider-val" class="text-xs text-right">Current: 0.00%</div>
 
-<div id="contact" class="page">
-    <h1>CONTACT FORM (99% SECURE)</h1>
-    <form id="bad-form">
-        <input type="text" placeholder="Your Social Security Number"><br>
-        <input type="email" placeholder="Your Mother's Maiden Name"><br>
-        <p>Try to submit. I dare you.</p>
-        <button type="button" id="runaway-btn">SUBMIT FORM</button>
-    </form>
-</div>
-
-<div id="secrets" class="page">
-    <h1>EVIL CAPTCHA</h1>
-    <p>Prove you are not a robot by clicking this dot 10 times. It's very easy.</p>
-    <div id="captcha-zone" style="height: 300px; position: relative; border: 1px solid black;">
-        <div id="target" class="evil-target">0/10</div>
+        <button id="runaway-submit" class="mt-6 w-full bg-black text-white py-4 rounded-full font-bold transition-all">
+            VERIFY MY EXISTENCE
+        </button>
     </div>
-</div>
+</section>
 
-<div id="win" class="page">
-    <h1>YOU WON!!!</h1>
-    <p>To claim your Useless Box, please fax a handwritten letter to the moon.</p>
-    <div id="glitch-text"></div>
-</div>
+<section id="ai-section" class="section bg-white text-black">
+    <h2 class="text-6xl font-black mb-12">THE AI IS JUDGING YOU</h2>
+    <div id="ai-chat" class="text-3xl font-light italic max-w-4xl text-center">
+        "I am watching your cursor. It looks... clumsy. Have you considered a better desk mat?"
+    </div>
+</section>
 
-<div class="ad-popup">
-    <b>HOT SINGLES IN YOUR AREA WANT TO LEARN HTML!</b>
-    <button onclick="this.parentElement.style.display='none'">[X] CLOSE (Doesn't work)</button>
-</div>
+<section id="footer" class="section">
+    <p class="text-xs text-gray-700 mb-4">© 2026 No Rights Reserved. Made with Zero Love.</p>
+    <div class="flex gap-4">
+        <a href="#" class="nav-item opacity-20">Privacy Policy</a>
+        <a href="#" class="nav-item opacity-20">Terms of Torture</a>
+        <a href="#" class="nav-item opacity-20">Delete My Computer</a>
+    </div>
+</section>
 
 <script>
-    // PAGE SWITCHER & NAV SCRAMBLER
-    function showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        
-        // Scramble Navigation
-        const nav = document.getElementById('main-nav');
-        for (let i = nav.children.length; i >= 0; i--) {
-            nav.appendChild(nav.children[Math.random() * i | 0]);
-        }
-    }
+    const cursor = document.getElementById('custom-cursor');
+    const navItems = document.querySelectorAll('.nav-item');
+    const runawayBtn = document.getElementById('runaway-submit');
+    const slider = document.getElementById('slider');
+    const sliderVal = document.getElementById('slider-val');
+    const aiChat = document.getElementById('ai-chat');
 
-    // RUNAWAY BUTTON LOGIC
-    const btn = document.getElementById('runaway-btn');
+    // 1. Laggy Custom Cursor
     document.addEventListener('mousemove', (e) => {
-        const btnRect = btn.getBoundingClientRect();
-        const distance = Math.hypot(e.clientX - (btnRect.left + btnRect.width/2), e.clientY - (btnRect.top + btnRect.height/2));
-        
-        if (distance < 100) {
-            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
-        }
+        setTimeout(() => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        }, 100); // 100ms delay to drive people crazy
     });
 
-    // EVIL CAPTCHA LOGIC
-    let score = 0;
-    const target = document.getElementById('target');
-    target.addEventListener('mouseover', () => {
-        target.style.left = Math.random() * 90 + '%';
-        target.style.top = Math.random() * 90 + '%';
-    });
-    target.addEventListener('click', () => {
-        score++;
-        target.innerText = score + "/10";
-        if(score >= 10) {
-            alert("ERROR: System busy. Try again in 400 years.");
-            score = 0;
-            target.innerText = "0/10";
-        }
-    });
-
-    // USELESS TOGGLE
-    const toggleBox = document.getElementById('toggle-box');
-    const knob = document.getElementById('toggle-knob');
-    toggleBox.addEventListener('mouseenter', () => {
-        toggleBox.style.marginTop = Math.random() * 500 + 'px';
-        toggleBox.style.marginLeft = Math.random() * 80 + '%';
-    });
-
-    // FORM RESET RANDOMIZER
-    const inputs = document.querySelectorAll('input');
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            if (Math.random() > 0.95) {
-                input.value = "";
-                alert("Oops! I dropped your data. Please start over.");
-            }
+    // 2. Navigation that flees
+    navItems.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            item.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(${Math.random() * 20 - 10}deg)`;
+            item.style.color = '#' + Math.floor(Math.random()*16777215).toString(16);
         });
     });
+
+    // 3. The Runaway Submit Button
+    runawayBtn.addEventListener('mouseover', () => {
+        runawayBtn.style.transform = `translate(${Math.random() * 400 - 200}px, ${Math.random() * 400 - 200}px)`;
+        runawayBtn.innerText = "NOT HERE!";
+    });
+
+    // 4. Slider Logic (Impossible to hit 73.45)
+    slider.addEventListener('input', (e) => {
+        let val = parseFloat(e.target.value);
+        if (val > 73 && val < 74) {
+            e.target.value = val + 0.5; // Jump over the target
+        }
+        sliderVal.innerText = `Current: ${e.target.value}%`;
+    });
+
+    // 5. AI Oracle Insults
+    const insults = [
+        "Your scrolling speed suggests high anxiety.",
+        "Stop looking for the 'Contact' page. We don't want to talk to you.",
+        "Is that what you're wearing today? Interesting.",
+        "Your click accuracy is 12%. My toaster is more precise.",
+        "Loading more disappointment... please wait."
+    ];
+    setInterval(() => {
+        aiChat.innerText = `"${insults[Math.floor(Math.random() * insults.length)]}"`;
+    }, 4000);
+
+    // 6. Random Scroll Jacking
+    window.addEventListener('scroll', () => {
+        if (Math.random() > 0.98) {
+            window.scrollBy({ top: -500, behavior: 'smooth' });
+            alert("SCROLL LIMIT REACHED. Please purchase the Premium Scroll Pack.");
+        }
+    });
+
 </script>
 
 </body>
