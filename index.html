@@ -3,234 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUJTABA'S WORTHLESS WEB - OMEGA BUILD</title>
+    <title>MUJTABA'S WORTHLESS WEB - OMEGA BUILD V2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Space+Mono&display=swap');
         
-        :root { --main-color: #00ff00; }
-        body { background: #000; color: #fff; font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; transition: filter 0.3s; }
+        :root { --main-color: #00ff00; --bg-color: #000; }
+        body { background: var(--bg-color); color: #fff; font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; transition: all 0.1s; }
         
-        /* Persistent Header */
+        /* HEADER & CURSORS */
         header { position: fixed; top: 0; width: 100%; background: #111; border-bottom: 2px solid var(--main-color); z-index: 10000; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* Cursors */
-        #real-cursor { width: 20px; height: 20px; background: var(--main-color); position: fixed; z-index: 99999; pointer-events: none; }
-        #ghost-cursor { width: 20px; height: 20px; background: #ff0055; position: fixed; z-index: 99998; pointer-events: none; opacity: 0.5; }
+        #real-cursor, #ghost-cursor { width: 20px; height: 20px; position: fixed; z-index: 99999; pointer-events: none; border-radius: 50%; }
+        #real-cursor { background: var(--main-color); }
+        #ghost-cursor { background: #ff0055; opacity: 0.5; mix-blend-mode: difference; }
 
+        /* PAGES */
         .page { display: none; min-height: 100vh; padding: 120px 20px 20px; flex-direction: column; align-items: center; }
         .active { display: flex; }
 
-        /* Premium Gate */
-        #premium-overlay { position: fixed; bottom: 0; width: 100%; height: 40vh; background: linear-gradient(transparent, black); z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 50px; pointer-events: none; }
-        .gate-active { pointer-events: all !important; }
-
-        /* Portugal Mode */
-        .portugal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-
-        .plan-card { border: 2px solid #333; padding: 40px; border-radius: 20px; transition: 0.3s; width: 300px; }
-        .plan-card:hover { border-color: var(--main-color); transform: scale(1.05); }
-
+        /* UTILS */
         .breath { animation: breath 8s infinite ease-in-out; }
-        @keyframes breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        @keyframes breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.01); } }
+        .shake { animation: shake 0.5s infinite; }
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
 
-        .alarm-flash { animation: flash 0.2s infinite; }
-        @keyframes flash { 0% { background: red; } 50% { background: black; } }
+        /* OVERLAYS */
+        .overlay { position: fixed; inset: 0; z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        #google-error { background: #202124; color: #bdc1c6; font-family: sans-serif; text-align: left; align-items: flex-start; padding: 10% 20%; z-index: 50000; }
+        #portugal-modal { background: rgba(0,0,0,0.95); color: #fff; }
+
+        /* NEW PAGE STYLES */
+        #terms-box { height: 400px; overflow-y: scroll; border: 1px solid #333; padding: 20px; font-size: 0.8rem; color: #666; }
+        #calibrate-box { width: 300px; height: 300px; border: 2px dashed #fff; position: relative; }
+        #calibrate-target { width: 50px; height: 50px; background: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: 0.1s; }
     </style>
 </head>
-<body class="breath">
+<body class="breath" id="main-body">
 
 <div id="real-cursor"></div>
 <div id="ghost-cursor"></div>
 
 <header>
-    <div class="font-black text-xl tracking-tighter">MUJTABA.OS</div>
-    <div class="flex gap-4">
+    <div class="font-black text-xl tracking-tighter" id="site-title">MUJTABA.OS</div>
+    <div class="flex gap-4 text-xs md:text-base">
         <button onclick="changePage('home')">HOME</button>
         <button onclick="changePage('plans')">PLANS</button>
         <button onclick="changePage('survey')">SURVEY</button>
+        <button onclick="changePage('terms')">TERMS</button>
+        <button onclick="changePage('calibrate')">CALIBRATE</button>
+        <button onclick="changePage('404-realm')">404</button>
     </div>
-    <div class="text-[#00ff00]">TIME WASTE: <span id="timer">00:00:00</span></div>
+    <div class="text-[#00ff00] hidden md:block">WASTED: <span id="timer">00:00:00</span></div>
 </header>
 
 <div id="home" class="page active">
-    <h1 class="text-8xl font-black mb-10 text-center" id="main-title">THE WORTHLESS EXPERIENCE</h1>
-    <div class="max-w-2xl text-center space-y-10">
-        <p>This website is optimized for maximum inefficiency. Every click is a mistake. Every scroll is a regret.</p>
-        <div class="p-10 border-2 border-dashed border-zinc-800">
-            [ CONTENT REDACTED - UPGRADE TO VIEW ]
-        </div>
-        <div class="h-96"></div> </div>
-    
-    <div id="premium-overlay">
-        <div class="bg-white text-black p-8 text-center rounded-t-3xl gate-active">
-            <h2 class="text-2xl font-bold">SCROLL LIMIT REACHED!</h2>
-            <p class="mb-4">Buy a premium plan to unlock the bottom 50% of this page.</p>
-            <button onclick="changePage('plans')" class="bg-black text-white px-8 py-3 font-bold">VIEW PLANS</button>
-        </div>
+    <h1 class="text-6xl md:text-8xl font-black mb-10 text-center">THE OMEGA DISAPPOINTMENT</h1>
+    <p class="text-center mb-10 max-w-xl">Welcome to v2. We added 100 new ways to waste your time. Good luck.</p>
+    <div class="p-10 border-2 border-dashed border-zinc-800 relative">
+        <div class="absolute inset-0 bg-black/80 flex items-center justify-center font-bold">[ PAY $5 TO VIEW ]</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
     </div>
+    <div class="h-screen"></div>
 </div>
 
 <div id="plans" class="page">
-    <h1 class="text-5xl font-black mb-20">CHOOSE YOUR BURDEN</h1>
+    <h1 class="text-5xl font-black mb-10">PRICING</h1>
     <div class="flex gap-10 flex-wrap justify-center">
-        <div class="plan-card">
-            <h3 class="text-2xl font-bold mb-4">STANDARD WORTHLESS</h3>
-            <p class="text-4xl font-black mb-6">$0<span class="text-sm">/forever</span></p>
-            <ul class="text-xs space-y-2 text-zinc-500 mb-8">
-                <li>• 10% Cursor Accuracy</li>
-                <li>• Mandatory 404 Errors</li>
-                <li>• Frequent Portugal Swaps</li>
-                <li>• No Exit Support</li>
-            </ul>
-            <button class="w-full py-2 border border-white opacity-50 cursor-not-allowed">CURRENT PLAN</button>
+        <div class="border-2 border-[#333] p-10 w-72 hover:border-green-500 transition-all">
+            <h3 class="text-2xl font-bold">BASIC PAIN</h3>
+            <p class="text-4xl font-black my-4">$0</p>
+            <button class="w-full py-2 border border-white opacity-50 cursor-not-allowed">CURRENT</button>
         </div>
-        <div class="plan-card bg-white text-black scale-110">
-            <div class="bg-red-500 text-white text-[10px] py-1 text-center mb-4">RECOMMENDED BY MUJTABA</div>
-            <h3 class="text-2xl font-bold mb-4">PRO WORTHLESS</h3>
-            <p class="text-4xl font-black mb-6">$999<span class="text-sm">/mo</span></p>
-            <ul class="text-xs space-y-2 mb-8">
-                <li>• Double Cursor Ghosting</li>
-                <li>• Priority Alarm Access</li>
-                <li>• HD Confusion Layers</li>
-                <li>• Extra Long Surveys</li>
-            </ul>
-            <button onclick="alert('Transaction failed: Your bank account is too logical.')" class="w-full py-2 bg-black text-white font-bold">UPGRADE NOW</button>
+        <div class="border-2 border-white bg-white text-black p-10 w-72 scale-105">
+            <h3 class="text-2xl font-bold">ULTRA SUFFERING</h3>
+            <p class="text-4xl font-black my-4">$999<span class="text-sm">/s</span></p>
+            <button onclick="alert('Card Declined: Insufficient Dignity')" class="w-full py-2 bg-black text-white font-bold">BUY NOW</button>
         </div>
     </div>
 </div>
 
 <div id="survey" class="page">
-    <h2 class="text-3xl font-bold mb-10">QUICK DONUT SURVEY</h2>
+    <h2 class="text-3xl font-bold mb-10">MANDATORY QUESTIONS</h2>
     <div class="w-full max-w-lg space-y-6">
-        <label>Have you ever seen a ghost eating a donut?</label>
-        <input type="text" class="w-full bg-zinc-900 border-b border-white p-2" placeholder="Describe the ghost's vibe">
-        
-        <label>Click the exact center of this circle to continue:</label>
-        <div class="w-20 h-20 bg-white rounded-full mx-auto" onclick="triggerLockdown()"></div>
+        <label>Does the number 7 look angry to you?</label>
+        <div class="flex gap-4"><button class="bg-zinc-800 p-2 w-full">YES</button><button class="bg-zinc-800 p-2 w-full">NO</button></div>
+        <label>Type 'BANANA' with your nose:</label>
+        <input type="text" class="w-full bg-zinc-900 border-b border-white p-2 glitch-input">
+        <button onclick="triggerLockdown()" class="bg-red-600 w-full py-4 font-black mt-10 hover:bg-red-700">SUBMIT SOUL</button>
     </div>
 </div>
 
-<div id="portugal-modal" class="portugal-overlay">
-    <div class="bg-white text-black p-20 text-center">
-        <h1 class="text-4xl font-black mb-4">ATENÇÃO!</h1>
-        <p class="mb-10">O seu idioma foi alterado para Português (Portugal) por razões de segurança.</p>
-        <select id="lang-picker" class="border-2 border-black p-4 mb-6 w-full">
-            <option>Português</option>
-            <option value="en">English (Blocked)</option>
-            <option>French</option>
-            <option>Alien</option>
-        </select>
-        <button onclick="tryRestoreLang()" class="bg-black text-white px-10 py-4 font-bold">ESCOLHER IDIOMA</button>
+<div id="terms" class="page">
+    <h1 class="text-4xl font-black mb-6">TERMS OF ETERNAL SERVICE</h1>
+    <div id="terms-box" onscroll="checkScroll(this)">
+        <p id="terms-content">Loading legal gibberish...</p>
     </div>
+    <div class="mt-4 relative w-full h-20">
+        <button id="agree-btn" class="absolute left-0 bg-zinc-800 text-white px-8 py-2 opacity-50 cursor-not-allowed" disabled>I AGREE</button>
+    </div>
+</div>
+
+<div id="calibrate" class="page">
+    <h1 class="text-4xl font-black mb-10">MOUSE CALIBRATION</h1>
+    <p class="mb-10">Hover over the red square to center it.</p>
+    <div id="calibrate-box">
+        <div id="calibrate-target"></div>
+    </div>
+</div>
+
+<div id="404-realm" class="page bg-white text-black text-center justify-center">
+    <h1 class="text-[15rem] font-black leading-none opacity-10 absolute select-none">404</h1>
+    <h2 class="text-6xl font-black relative z-10">PAGE_NOT_FOUND</h2>
+    <p class="text-xl mt-4 relative z-10">Just kidding, this is a real page. It just looks like a mistake.</p>
+    <button onclick="changePage('home')" class="mt-10 bg-black text-white px-8 py-3 relative z-10 hover:invert">GO BACK TO NOWHERE</button>
+</div>
+
+<div id="google-error" class="overlay">
+    <img src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_light_color_92x30dp.png" alt="Google" class="mb-8 opacity-50">
+    <h1 class="text-2xl mb-4 text-[#e8eaed]">Aw, Snap!</h1>
+    <p class="mb-8 max-w-md">Something went wrong while displaying this webpage.<br>Error code: MUJTABA_TOO_POWERFUL</p>
+    <button onclick="location.reload()" class="bg-[#8ab4f8] text-[#202124] px-6 py-2 rounded font-medium hover:bg-[#a6c8ff]">Reload</button>
+</div>
+
+<div id="portugal-modal" class="overlay">
+    <h1 class="text-5xl font-black mb-4 text-yellow-500">⚠️ ALERTA DE PORTUGAL ⚠️</h1>
+    <p class="text-xl mb-8">O seu navegador foi nacionalizado.</p>
+    <button onclick="alert('Erro: Não é possível sair de Portugal.')" class="bg-green-600 px-8 py-3 font-bold">ACEITAR O FADO</button>
 </div>
 
 <script>
+    // ================= CORE SYSTEMS =================
     let seconds = 0;
-    const cursor = document.getElementById('real-cursor');
-    const ghost = document.getElementById('ghost-cursor');
     const timerEl = document.getElementById('timer');
-    const title = document.getElementById('main-title');
-
-    // 1. Time Waste Counter
     setInterval(() => {
         seconds++;
-        let h = Math.floor(seconds / 3600).toString().padStart(2, '0');
-        let m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
-        let s = (seconds % 60).toString().padStart(2, '0');
-        timerEl.innerText = `${h}:${m}:${s}`;
+        timerEl.innerText = new Date(seconds * 1000).toISOString().substr(11, 8);
     }, 1000);
 
-    // 2. Double Cursor System
     document.addEventListener('mousemove', (e) => {
-        setTimeout(() => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        }, 50);
-        setTimeout(() => {
-            ghost.style.left = (e.clientX + 100) + 'px';
-            ghost.style.top = (e.clientY + 50) + 'px';
-        }, 150);
+        setTimeout(() => { document.getElementById('real-cursor').style.left = e.clientX + 'px'; document.getElementById('real-cursor').style.top = e.clientY + 'px'; }, 50);
+        setTimeout(() => { document.getElementById('ghost-cursor').style.left = (e.clientX+50)+'px'; document.getElementById('ghost-cursor').style.top = (e.clientY+80)+'px'; }, 150);
     });
 
-    // 3. Page Switching Logic
     function changePage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        if(Math.random() > 0.7) alert("Navigation Error: You are now elsewhere.");
+        if(Math.random() > 0.8) triggerChaos('nav-scramble');
     }
 
-    // 4. THE PORTUGAL PROTOCOL (Trigger after 1 min)
-    setTimeout(() => {
-        document.getElementById('portugal-modal').style.display = 'flex';
-        document.body.style.filter = "sepia(1) hue-rotate(90deg)";
-        translateToPortugal();
-    }, 60000);
+    // ================= PAGE SPECIFIC LOGIC =================
+    // Terms & Conditions
+    let termsText = "";
+    for(let i=0; i<500; i++) termsText += "Whereas the party of the first part agrees to forfeit all digital rights to the party of the second part in perpetuity throughout the known universe and any subsequently discovered dimensions. ";
+    document.getElementById('terms-content').innerText = termsText;
 
-    function translateToPortugal() {
-        title.innerText = "WEB SEM VALOR DO MUJTABA";
-        document.querySelector('header button:nth-child(1)').innerText = "INÍCIO";
-        document.querySelector('header button:nth-child(2)').innerText = "PLANOS";
-        document.querySelector('header button:nth-child(3)').innerText = "INQUÉRITO";
-    }
-
-    function tryRestoreLang() {
-        const val = document.getElementById('lang-picker').value;
-        if(val === 'en') {
-            alert("Error: English language pack requires 'Pro Worthless' subscription.");
-        } else {
-            alert("Language changed to 'Confusion'.");
-            location.reload();
+    const agreeBtn = document.getElementById('agree-btn');
+    function checkScroll(el) {
+        if(el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
+            agreeBtn.disabled = false; agreeBtn.classList.remove('opacity-50', 'cursor-not-allowed'); agreeBtn.classList.add('bg-green-500');
         }
     }
+    agreeBtn.addEventListener('mouseover', () => { if(!agreeBtn.disabled) agreeBtn.style.left = Math.random() * 80 + '%'; });
 
-    // 5. LOCKDOWN & ALARM
-    function triggerLockdown() {
-        document.body.classList.add('alarm-flash');
-        let count = 10;
-        const overlay = document.createElement('div');
-        overlay.className = "fixed inset-0 bg-red-600 z-[30000] flex flex-col items-center justify-center text-white font-black text-6xl";
-        overlay.innerHTML = `<div>LOCKDOWN</div><div id="cd">10</div>`;
-        document.body.appendChild(overlay);
+    // Calibration Game
+    const target = document.getElementById('calibrate-target');
+    target.addEventListener('mouseover', () => {
+        target.style.top = Math.random() * 90 + '%'; target.style.left = Math.random() * 90 + '%';
+    });
 
-        let t = setInterval(() => {
-            count--;
-            document.getElementById('cd').innerText = count;
-            if(count <= 0) {
-                clearInterval(t);
-                overlay.innerHTML = `<h1>THIS IS NOT THE SITE YOU ARE LOOKING FOR</h1><p class="text-xl">Redirecting to start in 5s...</p>`;
-                setTimeout(() => location.reload(), 5000);
-            }
-        }, 1000);
+    // ================= THE CHAOS ENGINE (100+ FEATURES) =================
+    const body = document.getElementById('main-body');
+    const header = document.querySelector('header');
+    let chaosLevel = 0;
+
+    const chaosActions = [
+        () => body.classList.toggle('invert'),
+        () => body.classList.toggle('blur-sm'),
+        () => body.style.transform = `skewX(${Math.random()*10-5}deg)`,
+        () => window.scrollBy(0, Math.random()*300-150),
+        () => document.title = ["HELP", "RUN", "ERROR", "MUJTABA WINS"][Math.floor(Math.random()*4)],
+        () => header.style.top = (Math.random()*20-10)+'px',
+        () => document.querySelectorAll('button').forEach(b => b.style.transform = `rotate(${Math.random()*10-5}deg)`),
+        () => { const n = document.createElement('div'); n.innerText = "💾 Saving..."; n.className="fixed bottom-4 right-4 bg-zinc-800 p-2 text-xs"; body.appendChild(n); setTimeout(()=>n.remove(), 1000); },
+        () => body.style.fontSize = (Math.random()*0.5+0.8)+'rem',
+        () => document.documentElement.style.cursor = 'wait',
+        () => document.querySelectorAll('h1').forEach(h=>h.innerText = h.innerText.split('').reverse().join('')),
+        () => body.classList.add('shake'),
+        () => { setTimeout(()=>body.classList.remove('shake', 'invert', 'blur-sm'), 500); body.style.transform = 'none'; body.style.fontSize = '1rem'; document.documentElement.style.cursor = 'none'; } // Reset
+    ];
+
+    function triggerChaos(type) {
+        chaosLevel++;
+        if(type === 'nav-scramble') { const nav = document.querySelector('header div.flex'); Array.from(nav.children).sort(()=>Math.random()-0.5).forEach(b=>nav.appendChild(b)); }
+        else { chaosActions[Math.floor(Math.random()*chaosActions.length)](); }
     }
-
-    // 6. RANDOM CHAOS (20+ Features integration)
-    // Scroll Jitter
-    window.addEventListener('scroll', () => {
-        if(Math.random() > 0.9) window.scrollBy(0, -200);
-    });
-
-    // Gravity Links
-    document.querySelectorAll('button, a').forEach(btn => {
-        btn.addEventListener('mouseover', () => {
-            btn.style.transform = `translate(${Math.random()*20}px, ${Math.random()*20}px)`;
-        });
-    });
-
-    // Random Invert
+    
+    // The Chaos Loop
     setInterval(() => {
-        if(Math.random() > 0.98) {
-            document.body.style.filter = "invert(1)";
-            setTimeout(() => document.body.style.filter = "none", 300);
-        }
+        if(Math.random() > 0.7) triggerChaos(); // 30% chance every second
+        if(Math.random() > 0.99) triggerGoogleError(); // 1% chance for big error
     }, 1000);
 
-    // Fake Typing
-    const typing = document.createElement('div');
-    typing.className = "fixed bottom-4 left-4 text-xs text-zinc-600";
-    typing.innerText = "Bill is typing...";
-    document.body.appendChild(typing);
+    // ================= MAJOR EVENTS =================
+    // Portugal Protocol (60s timer)
+    setTimeout(() => { document.getElementById('portugal-modal').style.display = 'flex'; document.getElementById('site-title').innerText = "SISTEMA MUJTABA"; }, 60000);
 
+    // Fake Google Error
+    function triggerGoogleError() {
+        document.getElementById('google-error').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Lockdown (from Survey)
+    function triggerLockdown() {
+        alert("CRITICAL ERROR: Too much data. Initiating system crash.");
+        document.body.innerHTML = '<div class="h-screen w-screen bg-blue-800 text-white flex items-center justify-center text-2xl font-mono">:( Your PC ran into a problem and needs to restart.<br><br>Stop code: MUJTABA_OVERLOAD</div>';
+    }
+
+    // Keyboard Scrambler
+    document.addEventListener('keydown', (e) => {
+        if(e.target.tagName === 'INPUT') {
+            e.preventDefault();
+            e.target.value += String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+        }
+    });
 </script>
 
 </body>
