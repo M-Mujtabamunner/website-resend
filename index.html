@@ -3,187 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUJTABA.OS - THE FINAL TERMINATION</title>
+    <title>MUJTABA.OS | THE FINAL SINGULARITY</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #00ff41; --err: #ff0055; }
-        body { background: #000; color: #fff; font-family: 'Space Mono', monospace; cursor: none; overflow: hidden; height: 100vh; width: 100vw; }
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Space+Mono&display=swap');
+
+        :root { --neon: #00ff9d; --error: #ff0055; }
+        body { background: #000; color: #fff; font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; transition: filter 0.5s; scroll-behavior: smooth; }
         
-        /* THE CURSOR */
-        #real-cursor { width: 15px; height: 15px; background: var(--main); position: fixed; z-index: 100000; pointer-events: none; border-radius: 50%; box-shadow: 0 0 10px var(--main); }
+        /* THE CURSOR DELAY */
+        #cursor-blob { width: 50px; height: 50px; border: 2px solid var(--neon); border-radius: 50%; position: fixed; pointer-events: none; z-index: 99999; backdrop-filter: invert(1); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
-        /* HEADER */
-        header { position: fixed; top: 0; width: 100%; background: #111; border-bottom: 2px solid #222; z-index: 5000; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        /* FAINTING EFFECT */
+        .fainted { filter: brightness(20) contrast(0.1); pointer-events: none; }
         
         /* PAGES */
-        .page { display: none; height: 100vh; width: 100vw; padding-top: 100px; flex-direction: column; align-items: center; position: absolute; }
+        .page { display: none; min-height: 100vh; padding: 120px 20px; flex-direction: column; align-items: center; width: 100vw; }
         .active { display: flex; }
 
         /* IMPOSSIBLE FORM */
-        .nightmare-input { background: #111; border: 1px solid #444; padding: 10px; width: 100%; color: var(--main); margin-bottom: 15px; }
-        .moving-check { position: relative; transition: 0.1s; }
+        .nightmare-input { background: #111; border: 1px solid #333; padding: 15px; width: 100%; color: var(--neon); margin-bottom: 20px; transition: 0.3s; }
+        
+        /* PORTUGAL OVERLAY */
+        #portugal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100000; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 
         /* WIN POPUP */
-        #win-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; background: #fff; color: #000; padding: 20px; z-index: 8000; border: 5px solid gold; display: none; text-align: center; }
+        .win-popup { position: fixed; background: white; color: black; padding: 20px; border: 4px solid gold; z-index: 50000; font-weight: 900; box-shadow: 20px 20px 0px var(--error); }
+        
+        /* POINTER POINTER IMAGE */
+        #ptr-img { position: fixed; display: none; z-index: 80000; pointer-events: none; width: 250px; border: 2px solid white; }
 
-        /* POINTER POINTER SIMULATION */
-        #pointer-image { position: fixed; display: none; z-index: 90000; pointer-events: none; border: 2px solid white; border-radius: 10px; }
-
-        /* UTILS */
-        .glitch-btn { background: var(--main); color: black; font-weight: 900; padding: 10px 20px; transition: 0.2s; }
-        .glitch-btn:hover { filter: hue-rotate(90deg); transform: scale(1.1); }
+        /* MARQUEE */
+        .ticker { position: fixed; bottom: 0; width: 100%; background: var(--error); color: white; padding: 5px; font-weight: bold; z-index: 1000; }
     </style>
 </head>
-<body>
+<body onscroll="checkFaint()">
 
-<div id="real-cursor"></div>
-<img id="pointer-image" src="https://i.imgur.com/8mXW3r0.png" width="200" alt="pointing">
+<div id="cursor-blob"></div>
+<img id="ptr-img" src="https://i.imgur.com/8mXW3r0.png" alt="pointing">
 
-<header>
-    <div class="font-black text-xl tracking-tighter" onclick="nav('home')">MUJTABA.SYS</div>
-    <div class="flex gap-6">
-        <button onclick="nav('home')" class="hover:text-[#00ff41]">HOME</button>
-        <button onclick="nav('login')" class="bg-zinc-800 px-2 py-1 text-[10px] border border-zinc-600">LOGIN (BETA)</button>
-    </div>
+<div id="portugal-overlay">
+    <h1 class="text-6xl font-black text-yellow-500 mb-6">🇵🇹 PORTUGAL LOCKDOWN 🇵🇹</h1>
+    <p class="text-xl mb-10">O seu IP cheira a sardinhas. Por favor, valide a sua cidadania.</p>
+    <button onclick="location.reload()" class="bg-green-600 px-10 py-4 font-bold">RECARREGAR REALIDADE</button>
+</div>
+
+<header class="fixed top-0 w-full p-8 flex justify-between items-center z-[9000] bg-black/80 backdrop-blur-md border-b border-white/10">
+    <div class="text-2xl font-black tracking-tighter" style="font-family: 'Syncopate'">MUJTABA.SYS</div>
+    <nav class="flex gap-8" id="quantum-nav">
+        <button onclick="qNav('home')" class="nav-item">ORIGIN</button>
+        <button onclick="qNav('login')" class="nav-item">AUTH</button>
+        <button onclick="qNav('market')" class="nav-item">MISERY</button>
+        <button onclick="qNav('survey')" class="nav-item">SURVEY</button>
+    </nav>
+    <div class="text-[10px] text-zinc-500">TIME WASTED: <span id="clock">00:00</span></div>
 </header>
 
 <div id="home" class="page active">
-    <h1 class="text-7xl font-black text-center mt-20">NOTHING<br>IS REAL</h1>
-    <p class="text-zinc-500 mt-4">Hold your mouse still for a surprise...</p>
-    <button onclick="showWin()" class="mt-20 bg-yellow-400 text-black px-10 py-5 font-black text-2xl animate-bounce">CLICK TO WIN!!!</button>
-</div>
+    <h1 class="text-[15vw] font-black leading-none opacity-10 absolute top-40 select-none">DISAPPOINT</h1>
+    <h2 class="text-6xl font-black mt-20 text-center glitch-text">WELCOME TO <br><span class="text-[#00ff9d]">ANTI-DESIGN 2.0</span></h2>
+    <p class="text-zinc-500 mt-8 max-w-xl text-center italic">Hold your mouse still for 3 seconds to trigger the Pointer-Pointer Neural Link Calibration.</p>
+    
+    <button onclick="spawnWin()" class="mt-24 bg-yellow-400 text-black px-12 py-6 font-black text-3xl hover:scale-110 transition-transform">CLAIM 1 BTC NOW</button>
+    
+    <div class="h-[1000px]"></div> </div>
 
 <div id="login" class="page">
-    <div class="w-full max-w-sm bg-zinc-900 p-8 border border-zinc-700 shadow-2xl">
-        <h2 class="text-2xl font-black mb-6 border-b border-zinc-700 pb-2">SECURE LOGIN</h2>
+    <div id="form-container" class="w-full max-w-md bg-zinc-900 p-10 border-t-4 border-[#00ff9d]">
+        <h3 class="text-2xl font-black mb-6">NEURAL LOGIN</h3>
+        <label class="text-[10px] text-zinc-500">EYE COLOR HEX CODE</label>
+        <input type="text" class="nightmare-input" placeholder="#000000" oninput="moveForm(this)">
         
-        <label class="text-[10px]">USERNAME (MUST BE IN KLINGON)</label>
-        <input type="text" class="nightmare-input" placeholder="e.g.  ">
-        
-        <label class="text-[10px]">PASSWORD (MUST CONTAIN THE SYMBOL FOR 'PI')</label>
-        <input type="password" class="nightmare-input" id="pass">
-
-        <label class="text-[10px] block mb-2">SELECT FAVORITE COLOR (ONLY WRONG ANSWERS):</label>
-        <select class="nightmare-input" onmousedown="this.size=5;" onchange="this.size=1; alert('Color too bright. Try again.')">
-            <option>Deep Red</option>
-            <option>Neon Blue</option>
-            <option>Dark Green</option>
-            <option>Invisible</option>
+        <label class="text-[10px] text-zinc-500">FAVORITE TYPE OF BREAD (SENSITIVE)</label>
+        <select class="nightmare-input" onchange="alert('Bread choice rejected by AI.')">
+            <option>Sourdough</option>
+            <option>Rye</option>
+            <option>Donut (Illegal)</option>
         </select>
 
-        <div class="flex items-center gap-2 mb-6" id="check-parent">
-            <input type="checkbox" id="scam-check" class="moving-check" onmouseover="moveCheckbox()">
-            <label class="text-[8px]">I agree to give Mujtaba my first-born child and my Netflix password.</label>
+        <div class="flex items-center gap-4 mb-8">
+            <input type="checkbox" id="scam-check" onmouseover="runawayCheck(this)">
+            <label class="text-[10px]">I agree to have my mouse movements sold to a cat-video algorithm.</label>
         </div>
 
-        <button onclick="alert('System Error: Password too short (Required: 400 characters)')" class="w-full glitch-btn">AUTHENTICATE</button>
+        <button onclick="alert('Error: Biometric data (Blink) not detected.')" class="w-full bg-[#00ff9d] text-black py-4 font-black">AUTHENTICATE</button>
     </div>
 </div>
 
-<div id="win-popup">
-    <h3 class="font-black text-xl">CONGRATULATIONS!!!</h3>
-    <p class="text-sm my-2">You are the 1,000,000th disappointed visitor!</p>
-    <button onclick="spawnMore()" class="bg-black text-white px-4 py-2 text-xs font-bold">CLOSE</button>
+<div id="market" class="page">
+    <h2 class="text-5xl font-black mb-10">MISERY INDEX</h2>
+    <div class="grid grid-cols-2 gap-4 w-full max-w-2xl">
+        <div class="border border-zinc-800 p-10 text-center">
+            <div class="text-zinc-500 text-xs mb-2">USER FRUSTRATION</div>
+            <div class="text-5xl font-black text-red-500">↑ 99.9%</div>
+        </div>
+        <div class="border border-zinc-800 p-10 text-center">
+            <div class="text-zinc-500 text-xs mb-2">DONUT STOCK</div>
+            <div class="text-5xl font-black text-green-500">↓ 0.0%</div>
+        </div>
+    </div>
+    <div class="mt-20 p-10 bg-white text-black font-black text-4xl w-full text-center">
+        VOLUME: <input type="range" class="w-full" oninput="changeBrightness(this)">
+        <p class="text-xs">Slide to adjust website visibility.</p>
+    </div>
+</div>
+
+<div id="survey" class="page">
+    <h2 class="text-4xl font-black mb-10">THE INFINITY SURVEY</h2>
+    <div class="p-20 border-2 border-dashed border-zinc-700 text-center">
+        <p class="text-xl mb-4">Step 4,921 of 10,000</p>
+        <p class="mb-10 text-zinc-500">"If a tree falls in a forest and no one is there, does it make a sound or does it just lose its SEO ranking?"</p>
+        <div class="flex gap-4 justify-center">
+            <button class="bg-white text-black px-6 py-2 font-bold" onclick="nav('home')">SOUND</button>
+            <button class="bg-white text-black px-6 py-2 font-bold" onclick="nav('home')">SEO</button>
+        </div>
+    </div>
+</div>
+
+<div class="ticker">
+    <marquee scrollamount="15">BREAKING: MUJTABA HAS DISABLED THE ESCAPE KEY // DON'T FORGET TO BUY NOTHING // PORTUGAL MODE ENGAGING IN 60 SECONDS...</marquee>
 </div>
 
 <script>
-    // 1. CORE NAVIGATION
-    function nav(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    }
-
-    // 2. CURSOR SYSTEM
-    const cursor = document.getElementById('real-cursor');
-    let mouseX = 0, mouseY = 0;
-    let idleTimer;
-
+    // 1. THE LAGGING CURSOR
+    const blob = document.getElementById('cursor-blob');
+    let mx = 0, my = 0, idleTime = 0;
     document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
+        mx = e.clientX; my = e.clientY; idleTime = 0;
+        document.getElementById('ptr-img').style.display = 'none';
+        setTimeout(() => {
+            blob.style.left = (mx - 25) + 'px';
+            blob.style.top = (my - 25) + 'px';
+        }, 150); // Massive 150ms delay
+    });
+
+    // 2. POINTER-POINTER LOGIC (Wait 3s)
+    setInterval(() => {
+        idleTime++;
+        if (idleTime > 3) {
+            const ptr = document.getElementById('ptr-img');
+            ptr.style.display = 'block';
+            ptr.style.left = (mx - 240) + 'px';
+            ptr.style.top = (my - 100) + 'px';
+        }
+    }, 1000);
+
+    // 3. FAINTING SCROLL
+    let lastScroll = 0;
+    function checkFaint() {
+        let st = window.pageYOffset;
+        if (Math.abs(st - lastScroll) > 80) {
+            document.body.classList.add('fainted');
+            setTimeout(() => document.body.classList.remove('fainted'), 1500);
+        }
+        lastScroll = st;
+        // Scroll Loop
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
+            window.scrollTo(0, 500);
+        }
+    }
+
+    // 4. QUANTUM NAVIGATION
+    function qNav(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // 40% chance to go to wrong page
+        const ids = ['home', 'login', 'market', 'survey'];
+        const actualId = Math.random() < 0.4 ? ids[Math.floor(Math.random()*ids.length)] : id;
+        document.getElementById(actualId).classList.add('active');
         
-        // Pointer Pointer Logic
-        document.getElementById('pointer-image').style.display = 'none';
-        clearTimeout(idleTimer);
-        idleTimer = setTimeout(showPointer, 2000); // Show pointer after 2s still
-    });
-
-    // 3. POINTER POINTER SIMULATION
-    function showPointer() {
-        const ptr = document.getElementById('pointer-image');
-        ptr.style.display = 'block';
-        ptr.style.left = (mouseX - 220) + 'px'; // Positions image pointing at cursor
-        ptr.style.top = (mouseY - 100) + 'px';
+        // Scramble Nav buttons
+        const nav = document.getElementById('quantum-nav');
+        const btns = Array.from(nav.children);
+        btns.sort(() => Math.random() - 0.5);
+        btns.forEach(b => nav.appendChild(b));
     }
 
-    // 4. IMPOSSIBLE FORM LOGIC
-    function moveCheckbox() {
-        const check = document.getElementById('scam-check');
-        check.style.marginLeft = Math.random() * 50 + 'px';
-        check.style.marginTop = Math.random() * 20 + 'px';
+    // 5. THE FORM OF SORROW
+    function moveForm(el) {
+        const container = document.getElementById('form-container');
+        container.style.transform = `rotate(${el.value.length * 2}deg) translateY(${el.value.length * 5}px)`;
+        if(el.value.length > 8) {
+            el.value = "WRONG";
+            alert("Spelling detected. We only accept typos.");
+        }
     }
 
-    // 5. WIN POPUP SYSTEM
-    function showWin() {
-        document.getElementById('win-popup').style.display = 'block';
+    function runawayCheck(el) {
+        el.style.transform = `translate(${Math.random()*100}px, ${Math.random()*50}px)`;
     }
 
-    function spawnMore() {
+    // 6. POPUP HYDRA
+    function spawnWin() {
         for(let i=0; i<5; i++) {
-            let clone = document.getElementById('win-popup').cloneNode(true);
-            clone.style.display = 'block';
-            clone.style.top = Math.random() * 80 + '%';
-            clone.style.left = Math.random() * 80 + '%';
-            clone.style.background = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
-            document.body.appendChild(clone);
+            const win = document.createElement('div');
+            win.className = "win-popup";
+            win.style.left = Math.random() * 80 + '%';
+            win.style.top = Math.random() * 80 + '%';
+            win.innerHTML = `<h3>WINNER!</h3><p>Click to close</p><button onclick="this.parentElement.remove(); spawnWin();" class="bg-black text-white p-2 mt-2">X</button>`;
+            document.body.appendChild(win);
         }
     }
 
-    // 6. CHAOS ENGINE (STRESSFUL FUNCTIONS)
-    
-    // Tab Prank
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) document.title = "HEY! DON'T LEAVE!";
-        else document.title = "WELCOME BACK TO HELL";
-    });
+    // 7. THE PORTUGAL PROTOCOL (Trigger after 60s)
+    setTimeout(() => {
+        document.getElementById('portugal-overlay').style.display = 'flex';
+        document.body.style.filter = "sepia(1) hue-rotate(90deg)";
+    }, 60000);
 
-    // Right Click Hack
-    document.addEventListener('contextmenu', e => {
-        e.preventDefault();
-        alert("Mujtaba has disabled your right-click for 'security' reasons.");
-    });
+    // 8. BRIGHTNESS SLIDER
+    function changeBrightness(el) {
+        document.body.style.filter = `brightness(${el.value / 50})`;
+    }
 
-    // Keyboard Scramble
-    document.addEventListener('keydown', (e) => {
-        if(e.target.tagName === 'INPUT') {
-            if(Math.random() > 0.7) {
-                e.preventDefault();
-                e.target.value += "LOL";
-            }
-        }
-    });
+    // 9. TIMER
+    let sec = 0;
+    setInterval(() => {
+        sec++;
+        document.getElementById('clock').innerText = Math.floor(sec/60).toString().padStart(2,'0') + ":" + (sec%60).toString().padStart(2,'0');
+    }, 1000);
 
-    // Scroll Sabotage
-    window.addEventListener('scroll', () => {
-        if(Math.random() > 0.95) window.scrollTo(0,0);
-    });
-
-    // Random Invert
+    // 10. RANDOM INVERSION FLASH
     setInterval(() => {
         if(Math.random() > 0.98) {
             document.body.style.filter = "invert(1)";
-            setTimeout(() => document.body.style.filter = "none", 100);
+            setTimeout(() => document.body.style.filter = "none", 150);
         }
     }, 2000);
 
-    // Initial Login Tip
-    console.log("%cSTOP!", "color: red; font-size: 50px; font-weight: bold;");
-    console.log("If Mujtaba told you to paste something here, he is trying to steal your donuts.");
-
 </script>
-
 </body>
 </html>
