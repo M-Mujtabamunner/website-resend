@@ -3,215 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUJTABA'S WORTHLESS WEB - THE FINAL BOSS</title>
+    <title>MUJTABA'S WORTHLESS WEB - OMEGA BUILD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Space+Mono&display=swap');
+        
+        :root { --main-color: #00ff00; }
+        body { background: #000; color: #fff; font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; transition: filter 0.3s; }
+        
+        /* Persistent Header */
+        header { position: fixed; top: 0; width: 100%; background: #111; border-bottom: 2px solid var(--main-color); z-index: 10000; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Cursors */
+        #real-cursor { width: 20px; height: 20px; background: var(--main-color); position: fixed; z-index: 99999; pointer-events: none; }
+        #ghost-cursor { width: 20px; height: 20px; background: #ff0055; position: fixed; z-index: 99998; pointer-events: none; opacity: 0.5; }
 
-        body {
-            background: #000;
-            color: #fff;
-            font-family: 'Space Mono', monospace;
-            cursor: none;
-            overflow-x: hidden;
-            transition: filter 0.5s;
-        }
+        .page { display: none; min-height: 100vh; padding: 120px 20px 20px; flex-direction: column; align-items: center; }
+        .active { display: flex; }
 
-        #custom-cursor {
-            width: 40px; height: 40px;
-            border: 3px solid #ff0055;
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            transition: width 0.3s, height 0.3s;
-        }
+        /* Premium Gate */
+        #premium-overlay { position: fixed; bottom: 0; width: 100%; height: 40vh; background: linear-gradient(transparent, black); z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 50px; pointer-events: none; }
+        .gate-active { pointer-events: all !important; }
 
-        .page { display: none; min-height: 100vh; padding: 100px 20px; }
-        .page.active { display: flex; flex-direction: column; align-items: center; }
+        /* Portugal Mode */
+        .portugal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
 
-        /* The "Fainting" Effect */
-        .fainted { filter: brightness(10) grayscale(1); pointer-events: none; }
+        .plan-card { border: 2px solid #333; padding: 40px; border-radius: 20px; transition: 0.3s; width: 300px; }
+        .plan-card:hover { border-color: var(--main-color); transform: scale(1.05); }
 
-        .glitch-btn {
-            background: #ff0055;
-            padding: 20px 40px;
-            font-family: 'Unbounded';
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            transition: 0.1s;
-        }
+        .breath { animation: breath 8s infinite ease-in-out; }
+        @keyframes breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
-        .glitch-btn:hover {
-            transform: skewX(-20deg);
-            background: #00f2ff;
-            color: #000;
-        }
-
-        .input-nightmare {
-            background: transparent;
-            border: 2px solid #333;
-            padding: 15px;
-            width: 300px;
-            margin: 10px;
-            text-align: center;
-        }
-
-        #stock-ticker {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: red;
-            color: white;
-            white-space: nowrap;
-            padding: 10px;
-        }
+        .alarm-flash { animation: flash 0.2s infinite; }
+        @keyframes flash { 0% { background: red; } 50% { background: black; } }
     </style>
 </head>
-<body onscroll="checkSpeed()">
+<body class="breath">
 
-<div id="custom-cursor"></div>
+<div id="real-cursor"></div>
+<div id="ghost-cursor"></div>
 
-<nav class="fixed top-0 w-full p-6 flex justify-between z-[100] bg-black/50 backdrop-blur-xl border-b border-white/10">
-    <div class="text-xl font-black">MUJTABA_V8.exe</div>
-    <div class="flex gap-6" id="nav-links">
-        <button onclick="navTo('home')" class="hover:line-through">ORIGIN</button>
-        <button onclick="navTo('portal')" class="hover:line-through">THE_VOID</button>
-        <button onclick="navTo('data')" class="hover:line-through">GIVE_DATA</button>
-        <button onclick="navTo('market')" class="hover:line-through">MISERY_INDEX</button>
-        <button onclick="navTo('win')" class="hover:line-through">CLAIM_PRIZE</button>
+<header>
+    <div class="font-black text-xl tracking-tighter">MUJTABA.OS</div>
+    <div class="flex gap-4">
+        <button onclick="changePage('home')">HOME</button>
+        <button onclick="changePage('plans')">PLANS</button>
+        <button onclick="changePage('survey')">SURVEY</button>
     </div>
-</nav>
+    <div class="text-[#00ff00]">TIME WASTE: <span id="timer">00:00:00</span></div>
+</header>
 
 <div id="home" class="page active">
-    <h1 class="text-[12vw] font-black leading-none text-center">NOTHING<br>WORKS.</h1>
-    <p class="text-zinc-500 mt-10">You are browsing the world's most optimized disappointment.</p>
-    <div class="mt-20 animate-bounce">↓ SCROLL TO FAIL ↓</div>
-</div>
-
-<div id="portal" class="page">
-    <h2 class="text-5xl font-black mb-10">AI CONSCIOUSNESS CHECK</h2>
-    <div id="webcam-mock" class="w-80 h-60 bg-zinc-900 border-4 border-dashed border-zinc-700 flex items-center justify-center text-xs text-center p-4">
-        [ CAMERA FEED BLOCKED ]<br>REASON: USER LOOKS TOO SMUG
-    </div>
-    <p class="mt-6 text-red-500" id="ai-comment">Analyzing your soul...</p>
-    <button class="glitch-btn mt-10" onclick="resetAI()">CALIBRATE REALITY</button>
-</div>
-
-<div id="data" class="page">
-    <h2 class="text-4xl font-black mb-4">MANDATORY SURVEY</h2>
-    <p class="mb-10 text-zinc-400">Step 1 of 8,402</p>
-    <input type="text" placeholder="Enter Birthplace of Great-Grandmother" class="input-nightmare" oninput="moveInput(this)">
-    <input type="range" class="w-64 mt-10" oninput="changeBrightness(this)">
-    <p class="text-[8px] mt-4 text-zinc-600">Slide to adjust your social standing</p>
-    <button class="mt-10 opacity-10 hover:opacity-100 transition-opacity">DO NOT CLICK THIS</button>
-</div>
-
-<div id="market" class="page">
-    <h2 class="text-4xl font-black mb-10">LIVE MISERY INDEX</h2>
-    <div class="grid grid-cols-2 gap-4 w-full max-w-2xl">
-        <div class="p-10 border border-white/20 text-center">
-            <div class="text-xs text-zinc-500">USER FRUSTRATION</div>
-            <div class="text-4xl font-black text-green-400">↑ 420%</div>
+    <h1 class="text-8xl font-black mb-10 text-center" id="main-title">THE WORTHLESS EXPERIENCE</h1>
+    <div class="max-w-2xl text-center space-y-10">
+        <p>This website is optimized for maximum inefficiency. Every click is a mistake. Every scroll is a regret.</p>
+        <div class="p-10 border-2 border-dashed border-zinc-800">
+            [ CONTENT REDACTED - UPGRADE TO VIEW ]
         </div>
-        <div class="p-10 border border-white/20 text-center">
-            <div class="text-xs text-zinc-500">TIME WASTED</div>
-            <div id="timer" class="text-4xl font-black">00:00</div>
+        <div class="h-96"></div> </div>
+    
+    <div id="premium-overlay">
+        <div class="bg-white text-black p-8 text-center rounded-t-3xl gate-active">
+            <h2 class="text-2xl font-bold">SCROLL LIMIT REACHED!</h2>
+            <p class="mb-4">Buy a premium plan to unlock the bottom 50% of this page.</p>
+            <button onclick="changePage('plans')" class="bg-black text-white px-8 py-3 font-bold">VIEW PLANS</button>
         </div>
     </div>
-    <div class="mt-20 w-full bg-white text-black p-4 font-black overflow-hidden">
-        <marquee scrollamount="20">BUY LOW SELL HIGH BUY LOW SELL HIGH THE INTERNET IS A TUBE THE INTERNET IS A TUBE</marquee>
+</div>
+
+<div id="plans" class="page">
+    <h1 class="text-5xl font-black mb-20">CHOOSE YOUR BURDEN</h1>
+    <div class="flex gap-10 flex-wrap justify-center">
+        <div class="plan-card">
+            <h3 class="text-2xl font-bold mb-4">STANDARD WORTHLESS</h3>
+            <p class="text-4xl font-black mb-6">$0<span class="text-sm">/forever</span></p>
+            <ul class="text-xs space-y-2 text-zinc-500 mb-8">
+                <li>• 10% Cursor Accuracy</li>
+                <li>• Mandatory 404 Errors</li>
+                <li>• Frequent Portugal Swaps</li>
+                <li>• No Exit Support</li>
+            </ul>
+            <button class="w-full py-2 border border-white opacity-50 cursor-not-allowed">CURRENT PLAN</button>
+        </div>
+        <div class="plan-card bg-white text-black scale-110">
+            <div class="bg-red-500 text-white text-[10px] py-1 text-center mb-4">RECOMMENDED BY MUJTABA</div>
+            <h3 class="text-2xl font-bold mb-4">PRO WORTHLESS</h3>
+            <p class="text-4xl font-black mb-6">$999<span class="text-sm">/mo</span></p>
+            <ul class="text-xs space-y-2 mb-8">
+                <li>• Double Cursor Ghosting</li>
+                <li>• Priority Alarm Access</li>
+                <li>• HD Confusion Layers</li>
+                <li>• Extra Long Surveys</li>
+            </ul>
+            <button onclick="alert('Transaction failed: Your bank account is too logical.')" class="w-full py-2 bg-black text-white font-bold">UPGRADE NOW</button>
+        </div>
     </div>
 </div>
 
-<div id="win" class="page">
-    <h1 class="text-6xl font-black text-center">YOU DESERVE THE WIN</h1>
-    <p class="mt-10">Click the button below to claim your 100% Real Prize.</p>
-    <div id="prize-container" style="position:relative; width: 100%; height: 200px;">
-        <button id="prize-btn" class="glitch-btn absolute left-1/2 -translate-x-1/2">CLAIM NOW</button>
+<div id="survey" class="page">
+    <h2 class="text-3xl font-bold mb-10">QUICK DONUT SURVEY</h2>
+    <div class="w-full max-w-lg space-y-6">
+        <label>Have you ever seen a ghost eating a donut?</label>
+        <input type="text" class="w-full bg-zinc-900 border-b border-white p-2" placeholder="Describe the ghost's vibe">
+        
+        <label>Click the exact center of this circle to continue:</label>
+        <div class="w-20 h-20 bg-white rounded-full mx-auto" onclick="triggerLockdown()"></div>
     </div>
 </div>
 
-<div id="stock-ticker">
-    BREAKING: MUJTABA DECLARES THIS WEBSITE "TOO FUNCTIONAL" — UPDATE PENDING — NO ONE IS SAFE — 
+<div id="portugal-modal" class="portugal-overlay">
+    <div class="bg-white text-black p-20 text-center">
+        <h1 class="text-4xl font-black mb-4">ATENÇÃO!</h1>
+        <p class="mb-10">O seu idioma foi alterado para Português (Portugal) por razões de segurança.</p>
+        <select id="lang-picker" class="border-2 border-black p-4 mb-6 w-full">
+            <option>Português</option>
+            <option value="en">English (Blocked)</option>
+            <option>French</option>
+            <option>Alien</option>
+        </select>
+        <button onclick="tryRestoreLang()" class="bg-black text-white px-10 py-4 font-bold">ESCOLHER IDIOMA</button>
+    </div>
 </div>
 
 <script>
-    const cursor = document.getElementById('custom-cursor');
-    const prizeBtn = document.getElementById('prize-btn');
-    let clickCount = 0;
-    let lastScrollTop = 0;
+    let seconds = 0;
+    const cursor = document.getElementById('real-cursor');
+    const ghost = document.getElementById('ghost-cursor');
+    const timerEl = document.getElementById('timer');
+    const title = document.getElementById('main-title');
 
-    // 1. THE CURSOR TAX & DELAY
+    // 1. Time Waste Counter
+    setInterval(() => {
+        seconds++;
+        let h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        let m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+        let s = (seconds % 60).toString().padStart(2, '0');
+        timerEl.innerText = `${h}:${m}:${s}`;
+    }, 1000);
+
+    // 2. Double Cursor System
     document.addEventListener('mousemove', (e) => {
         setTimeout(() => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-        }, 150); // Massive input lag
+        }, 50);
+        setTimeout(() => {
+            ghost.style.left = (e.clientX + 100) + 'px';
+            ghost.style.top = (e.clientY + 50) + 'px';
+        }, 150);
     });
 
-    document.addEventListener('click', () => {
-        clickCount++;
-        cursor.style.width = (40 + (clickCount * 10)) + 'px';
-        cursor.style.height = (40 + (clickCount * 10)) + 'px';
-        if(clickCount > 15) clickCount = 0; // Reset
-    });
-
-    // 2. QUANTUM NAVIGATION
-    function navTo(pageId) {
+    // 3. Page Switching Logic
+    function changePage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        
-        // 30% chance to go to a random page instead of the one clicked
-        const pages = ['home', 'portal', 'data', 'market', 'win'];
-        const actualPage = Math.random() < 0.3 ? pages[Math.floor(Math.random()*pages.length)] : pageId;
-        
-        document.getElementById(actualPage).classList.add('active');
-        
-        // Scramble the nav buttons
-        const nav = document.getElementById('nav-links');
-        const btns = Array.from(nav.children);
-        btns.sort(() => Math.random() - 0.5);
-        btns.forEach(b => nav.appendChild(b));
+        document.getElementById(id).classList.add('active');
+        if(Math.random() > 0.7) alert("Navigation Error: You are now elsewhere.");
     }
 
-    // 3. BIOMETRIC SCROLL (FAINTING)
-    function checkSpeed() {
-        let st = window.pageYOffset || document.documentElement.scrollTop;
-        if (Math.abs(st - lastScrollTop) > 100) {
-            document.body.classList.add('fainted');
-            setTimeout(() => document.body.classList.remove('fainted'), 2000);
+    // 4. THE PORTUGAL PROTOCOL (Trigger after 1 min)
+    setTimeout(() => {
+        document.getElementById('portugal-modal').style.display = 'flex';
+        document.body.style.filter = "sepia(1) hue-rotate(90deg)";
+        translateToPortugal();
+    }, 60000);
+
+    function translateToPortugal() {
+        title.innerText = "WEB SEM VALOR DO MUJTABA";
+        document.querySelector('header button:nth-child(1)').innerText = "INÍCIO";
+        document.querySelector('header button:nth-child(2)').innerText = "PLANOS";
+        document.querySelector('header button:nth-child(3)').innerText = "INQUÉRITO";
+    }
+
+    function tryRestoreLang() {
+        const val = document.getElementById('lang-picker').value;
+        if(val === 'en') {
+            alert("Error: English language pack requires 'Pro Worthless' subscription.");
+        } else {
+            alert("Language changed to 'Confusion'.");
+            location.reload();
         }
-        lastScrollTop = st <= 0 ? 0 : st;
     }
 
-    // 4. THE RUNAWAY PRIZE BUTTON
-    prizeBtn.addEventListener('mouseover', () => {
-        prizeBtn.style.left = Math.random() * 80 + '%';
-        prizeBtn.style.top = Math.random() * 150 + 'px';
-        prizeBtn.innerText = "NOT SO FAST";
+    // 5. LOCKDOWN & ALARM
+    function triggerLockdown() {
+        document.body.classList.add('alarm-flash');
+        let count = 10;
+        const overlay = document.createElement('div');
+        overlay.className = "fixed inset-0 bg-red-600 z-[30000] flex flex-col items-center justify-center text-white font-black text-6xl";
+        overlay.innerHTML = `<div>LOCKDOWN</div><div id="cd">10</div>`;
+        document.body.appendChild(overlay);
+
+        let t = setInterval(() => {
+            count--;
+            document.getElementById('cd').innerText = count;
+            if(count <= 0) {
+                clearInterval(t);
+                overlay.innerHTML = `<h1>THIS IS NOT THE SITE YOU ARE LOOKING FOR</h1><p class="text-xl">Redirecting to start in 5s...</p>`;
+                setTimeout(() => location.reload(), 5000);
+            }
+        }, 1000);
+    }
+
+    // 6. RANDOM CHAOS (20+ Features integration)
+    // Scroll Jitter
+    window.addEventListener('scroll', () => {
+        if(Math.random() > 0.9) window.scrollBy(0, -200);
     });
 
-    // 5. INPUT NIGHTMARE
-    function moveInput(el) {
-        el.style.transform = `translateX(${Math.random() * 50}px) rotate(${Math.random() * 10 - 5}deg)`;
-        if(el.value.length > 10) {
-            el.value = "WRONG";
-            alert("Typos detected in your DNA. Please restart computer.");
-        }
-    }
+    // Gravity Links
+    document.querySelectorAll('button, a').forEach(btn => {
+        btn.addEventListener('mouseover', () => {
+            btn.style.transform = `translate(${Math.random()*20}px, ${Math.random()*20}px)`;
+        });
+    });
 
-    // 6. MISERY TIMER
-    let seconds = 0;
+    // Random Invert
     setInterval(() => {
-        seconds++;
-        let m = Math.floor(seconds / 60).toString().padStart(2, '0');
-        let s = (seconds % 60).toString().padStart(2, '0');
-        document.getElementById('timer').innerText = `${m}:${s}`;
+        if(Math.random() > 0.98) {
+            document.body.style.filter = "invert(1)";
+            setTimeout(() => document.body.style.filter = "none", 300);
+        }
     }, 1000);
 
-    // 7. AI INSULTS
-    const insults = ["You're clicking like a bot.", "Nice eyes. Can I have them?", "Error 404: User Brain Not Found.", "I'm telling your ISP about this."];
-    function resetAI() {
-        document.getElementById('ai-comment').innerText = insults[Math.floor(Math.random()*insults.length)];
-    }
+    // Fake Typing
+    const typing = document.createElement('div');
+    typing.className = "fixed bottom-4 left-4 text-xs text-zinc-600";
+    typing.innerText = "Bill is typing...";
+    document.body.appendChild(typing);
+
 </script>
 
 </body>
