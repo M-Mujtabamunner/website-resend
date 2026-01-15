@@ -3,230 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUJTABA'S WORTHLESS WEB - OMEGA BUILD V2</title>
+    <title>MUJTABA.OS - THE FINAL TERMINATION</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Space+Mono&display=swap');
+        :root { --main: #00ff41; --err: #ff0055; }
+        body { background: #000; color: #fff; font-family: 'Space Mono', monospace; cursor: none; overflow: hidden; height: 100vh; width: 100vw; }
         
-        :root { --main-color: #00ff00; --bg-color: #000; }
-        body { background: var(--bg-color); color: #fff; font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; transition: all 0.1s; }
+        /* THE CURSOR */
+        #real-cursor { width: 15px; height: 15px; background: var(--main); position: fixed; z-index: 100000; pointer-events: none; border-radius: 50%; box-shadow: 0 0 10px var(--main); }
         
-        /* HEADER & CURSORS */
-        header { position: fixed; top: 0; width: 100%; background: #111; border-bottom: 2px solid var(--main-color); z-index: 10000; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-        #real-cursor, #ghost-cursor { width: 20px; height: 20px; position: fixed; z-index: 99999; pointer-events: none; border-radius: 50%; }
-        #real-cursor { background: var(--main-color); }
-        #ghost-cursor { background: #ff0055; opacity: 0.5; mix-blend-mode: difference; }
-
+        /* HEADER */
+        header { position: fixed; top: 0; width: 100%; background: #111; border-bottom: 2px solid #222; z-index: 5000; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        
         /* PAGES */
-        .page { display: none; min-height: 100vh; padding: 120px 20px 20px; flex-direction: column; align-items: center; }
+        .page { display: none; height: 100vh; width: 100vw; padding-top: 100px; flex-direction: column; align-items: center; position: absolute; }
         .active { display: flex; }
 
+        /* IMPOSSIBLE FORM */
+        .nightmare-input { background: #111; border: 1px solid #444; padding: 10px; width: 100%; color: var(--main); margin-bottom: 15px; }
+        .moving-check { position: relative; transition: 0.1s; }
+
+        /* WIN POPUP */
+        #win-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; background: #fff; color: #000; padding: 20px; z-index: 8000; border: 5px solid gold; display: none; text-align: center; }
+
+        /* POINTER POINTER SIMULATION */
+        #pointer-image { position: fixed; display: none; z-index: 90000; pointer-events: none; border: 2px solid white; border-radius: 10px; }
+
         /* UTILS */
-        .breath { animation: breath 8s infinite ease-in-out; }
-        @keyframes breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.01); } }
-        .shake { animation: shake 0.5s infinite; }
-        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
-
-        /* OVERLAYS */
-        .overlay { position: fixed; inset: 0; z-index: 20000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        #google-error { background: #202124; color: #bdc1c6; font-family: sans-serif; text-align: left; align-items: flex-start; padding: 10% 20%; z-index: 50000; }
-        #portugal-modal { background: rgba(0,0,0,0.95); color: #fff; }
-
-        /* NEW PAGE STYLES */
-        #terms-box { height: 400px; overflow-y: scroll; border: 1px solid #333; padding: 20px; font-size: 0.8rem; color: #666; }
-        #calibrate-box { width: 300px; height: 300px; border: 2px dashed #fff; position: relative; }
-        #calibrate-target { width: 50px; height: 50px; background: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: 0.1s; }
+        .glitch-btn { background: var(--main); color: black; font-weight: 900; padding: 10px 20px; transition: 0.2s; }
+        .glitch-btn:hover { filter: hue-rotate(90deg); transform: scale(1.1); }
     </style>
 </head>
-<body class="breath" id="main-body">
+<body>
 
 <div id="real-cursor"></div>
-<div id="ghost-cursor"></div>
+<img id="pointer-image" src="https://i.imgur.com/8mXW3r0.png" width="200" alt="pointing">
 
 <header>
-    <div class="font-black text-xl tracking-tighter" id="site-title">MUJTABA.OS</div>
-    <div class="flex gap-4 text-xs md:text-base">
-        <button onclick="changePage('home')">HOME</button>
-        <button onclick="changePage('plans')">PLANS</button>
-        <button onclick="changePage('survey')">SURVEY</button>
-        <button onclick="changePage('terms')">TERMS</button>
-        <button onclick="changePage('calibrate')">CALIBRATE</button>
-        <button onclick="changePage('404-realm')">404</button>
+    <div class="font-black text-xl tracking-tighter" onclick="nav('home')">MUJTABA.SYS</div>
+    <div class="flex gap-6">
+        <button onclick="nav('home')" class="hover:text-[#00ff41]">HOME</button>
+        <button onclick="nav('login')" class="bg-zinc-800 px-2 py-1 text-[10px] border border-zinc-600">LOGIN (BETA)</button>
     </div>
-    <div class="text-[#00ff00] hidden md:block">WASTED: <span id="timer">00:00:00</span></div>
 </header>
 
 <div id="home" class="page active">
-    <h1 class="text-6xl md:text-8xl font-black mb-10 text-center">THE OMEGA DISAPPOINTMENT</h1>
-    <p class="text-center mb-10 max-w-xl">Welcome to v2. We added 100 new ways to waste your time. Good luck.</p>
-    <div class="p-10 border-2 border-dashed border-zinc-800 relative">
-        <div class="absolute inset-0 bg-black/80 flex items-center justify-center font-bold">[ PAY $5 TO VIEW ]</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    </div>
-    <div class="h-screen"></div>
+    <h1 class="text-7xl font-black text-center mt-20">NOTHING<br>IS REAL</h1>
+    <p class="text-zinc-500 mt-4">Hold your mouse still for a surprise...</p>
+    <button onclick="showWin()" class="mt-20 bg-yellow-400 text-black px-10 py-5 font-black text-2xl animate-bounce">CLICK TO WIN!!!</button>
 </div>
 
-<div id="plans" class="page">
-    <h1 class="text-5xl font-black mb-10">PRICING</h1>
-    <div class="flex gap-10 flex-wrap justify-center">
-        <div class="border-2 border-[#333] p-10 w-72 hover:border-green-500 transition-all">
-            <h3 class="text-2xl font-bold">BASIC PAIN</h3>
-            <p class="text-4xl font-black my-4">$0</p>
-            <button class="w-full py-2 border border-white opacity-50 cursor-not-allowed">CURRENT</button>
+<div id="login" class="page">
+    <div class="w-full max-w-sm bg-zinc-900 p-8 border border-zinc-700 shadow-2xl">
+        <h2 class="text-2xl font-black mb-6 border-b border-zinc-700 pb-2">SECURE LOGIN</h2>
+        
+        <label class="text-[10px]">USERNAME (MUST BE IN KLINGON)</label>
+        <input type="text" class="nightmare-input" placeholder="e.g.  ">
+        
+        <label class="text-[10px]">PASSWORD (MUST CONTAIN THE SYMBOL FOR 'PI')</label>
+        <input type="password" class="nightmare-input" id="pass">
+
+        <label class="text-[10px] block mb-2">SELECT FAVORITE COLOR (ONLY WRONG ANSWERS):</label>
+        <select class="nightmare-input" onmousedown="this.size=5;" onchange="this.size=1; alert('Color too bright. Try again.')">
+            <option>Deep Red</option>
+            <option>Neon Blue</option>
+            <option>Dark Green</option>
+            <option>Invisible</option>
+        </select>
+
+        <div class="flex items-center gap-2 mb-6" id="check-parent">
+            <input type="checkbox" id="scam-check" class="moving-check" onmouseover="moveCheckbox()">
+            <label class="text-[8px]">I agree to give Mujtaba my first-born child and my Netflix password.</label>
         </div>
-        <div class="border-2 border-white bg-white text-black p-10 w-72 scale-105">
-            <h3 class="text-2xl font-bold">ULTRA SUFFERING</h3>
-            <p class="text-4xl font-black my-4">$999<span class="text-sm">/s</span></p>
-            <button onclick="alert('Card Declined: Insufficient Dignity')" class="w-full py-2 bg-black text-white font-bold">BUY NOW</button>
-        </div>
+
+        <button onclick="alert('System Error: Password too short (Required: 400 characters)')" class="w-full glitch-btn">AUTHENTICATE</button>
     </div>
 </div>
 
-<div id="survey" class="page">
-    <h2 class="text-3xl font-bold mb-10">MANDATORY QUESTIONS</h2>
-    <div class="w-full max-w-lg space-y-6">
-        <label>Does the number 7 look angry to you?</label>
-        <div class="flex gap-4"><button class="bg-zinc-800 p-2 w-full">YES</button><button class="bg-zinc-800 p-2 w-full">NO</button></div>
-        <label>Type 'BANANA' with your nose:</label>
-        <input type="text" class="w-full bg-zinc-900 border-b border-white p-2 glitch-input">
-        <button onclick="triggerLockdown()" class="bg-red-600 w-full py-4 font-black mt-10 hover:bg-red-700">SUBMIT SOUL</button>
-    </div>
-</div>
-
-<div id="terms" class="page">
-    <h1 class="text-4xl font-black mb-6">TERMS OF ETERNAL SERVICE</h1>
-    <div id="terms-box" onscroll="checkScroll(this)">
-        <p id="terms-content">Loading legal gibberish...</p>
-    </div>
-    <div class="mt-4 relative w-full h-20">
-        <button id="agree-btn" class="absolute left-0 bg-zinc-800 text-white px-8 py-2 opacity-50 cursor-not-allowed" disabled>I AGREE</button>
-    </div>
-</div>
-
-<div id="calibrate" class="page">
-    <h1 class="text-4xl font-black mb-10">MOUSE CALIBRATION</h1>
-    <p class="mb-10">Hover over the red square to center it.</p>
-    <div id="calibrate-box">
-        <div id="calibrate-target"></div>
-    </div>
-</div>
-
-<div id="404-realm" class="page bg-white text-black text-center justify-center">
-    <h1 class="text-[15rem] font-black leading-none opacity-10 absolute select-none">404</h1>
-    <h2 class="text-6xl font-black relative z-10">PAGE_NOT_FOUND</h2>
-    <p class="text-xl mt-4 relative z-10">Just kidding, this is a real page. It just looks like a mistake.</p>
-    <button onclick="changePage('home')" class="mt-10 bg-black text-white px-8 py-3 relative z-10 hover:invert">GO BACK TO NOWHERE</button>
-</div>
-
-<div id="google-error" class="overlay">
-    <img src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_light_color_92x30dp.png" alt="Google" class="mb-8 opacity-50">
-    <h1 class="text-2xl mb-4 text-[#e8eaed]">Aw, Snap!</h1>
-    <p class="mb-8 max-w-md">Something went wrong while displaying this webpage.<br>Error code: MUJTABA_TOO_POWERFUL</p>
-    <button onclick="location.reload()" class="bg-[#8ab4f8] text-[#202124] px-6 py-2 rounded font-medium hover:bg-[#a6c8ff]">Reload</button>
-</div>
-
-<div id="portugal-modal" class="overlay">
-    <h1 class="text-5xl font-black mb-4 text-yellow-500">⚠️ ALERTA DE PORTUGAL ⚠️</h1>
-    <p class="text-xl mb-8">O seu navegador foi nacionalizado.</p>
-    <button onclick="alert('Erro: Não é possível sair de Portugal.')" class="bg-green-600 px-8 py-3 font-bold">ACEITAR O FADO</button>
+<div id="win-popup">
+    <h3 class="font-black text-xl">CONGRATULATIONS!!!</h3>
+    <p class="text-sm my-2">You are the 1,000,000th disappointed visitor!</p>
+    <button onclick="spawnMore()" class="bg-black text-white px-4 py-2 text-xs font-bold">CLOSE</button>
 </div>
 
 <script>
-    // ================= CORE SYSTEMS =================
-    let seconds = 0;
-    const timerEl = document.getElementById('timer');
-    setInterval(() => {
-        seconds++;
-        timerEl.innerText = new Date(seconds * 1000).toISOString().substr(11, 8);
-    }, 1000);
-
-    document.addEventListener('mousemove', (e) => {
-        setTimeout(() => { document.getElementById('real-cursor').style.left = e.clientX + 'px'; document.getElementById('real-cursor').style.top = e.clientY + 'px'; }, 50);
-        setTimeout(() => { document.getElementById('ghost-cursor').style.left = (e.clientX+50)+'px'; document.getElementById('ghost-cursor').style.top = (e.clientY+80)+'px'; }, 150);
-    });
-
-    function changePage(id) {
+    // 1. CORE NAVIGATION
+    function nav(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        if(Math.random() > 0.8) triggerChaos('nav-scramble');
     }
 
-    // ================= PAGE SPECIFIC LOGIC =================
-    // Terms & Conditions
-    let termsText = "";
-    for(let i=0; i<500; i++) termsText += "Whereas the party of the first part agrees to forfeit all digital rights to the party of the second part in perpetuity throughout the known universe and any subsequently discovered dimensions. ";
-    document.getElementById('terms-content').innerText = termsText;
+    // 2. CURSOR SYSTEM
+    const cursor = document.getElementById('real-cursor');
+    let mouseX = 0, mouseY = 0;
+    let idleTimer;
 
-    const agreeBtn = document.getElementById('agree-btn');
-    function checkScroll(el) {
-        if(el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
-            agreeBtn.disabled = false; agreeBtn.classList.remove('opacity-50', 'cursor-not-allowed'); agreeBtn.classList.add('bg-green-500');
-        }
-    }
-    agreeBtn.addEventListener('mouseover', () => { if(!agreeBtn.disabled) agreeBtn.style.left = Math.random() * 80 + '%'; });
-
-    // Calibration Game
-    const target = document.getElementById('calibrate-target');
-    target.addEventListener('mouseover', () => {
-        target.style.top = Math.random() * 90 + '%'; target.style.left = Math.random() * 90 + '%';
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+        
+        // Pointer Pointer Logic
+        document.getElementById('pointer-image').style.display = 'none';
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(showPointer, 2000); // Show pointer after 2s still
     });
 
-    // ================= THE CHAOS ENGINE (100+ FEATURES) =================
-    const body = document.getElementById('main-body');
-    const header = document.querySelector('header');
-    let chaosLevel = 0;
-
-    const chaosActions = [
-        () => body.classList.toggle('invert'),
-        () => body.classList.toggle('blur-sm'),
-        () => body.style.transform = `skewX(${Math.random()*10-5}deg)`,
-        () => window.scrollBy(0, Math.random()*300-150),
-        () => document.title = ["HELP", "RUN", "ERROR", "MUJTABA WINS"][Math.floor(Math.random()*4)],
-        () => header.style.top = (Math.random()*20-10)+'px',
-        () => document.querySelectorAll('button').forEach(b => b.style.transform = `rotate(${Math.random()*10-5}deg)`),
-        () => { const n = document.createElement('div'); n.innerText = "💾 Saving..."; n.className="fixed bottom-4 right-4 bg-zinc-800 p-2 text-xs"; body.appendChild(n); setTimeout(()=>n.remove(), 1000); },
-        () => body.style.fontSize = (Math.random()*0.5+0.8)+'rem',
-        () => document.documentElement.style.cursor = 'wait',
-        () => document.querySelectorAll('h1').forEach(h=>h.innerText = h.innerText.split('').reverse().join('')),
-        () => body.classList.add('shake'),
-        () => { setTimeout(()=>body.classList.remove('shake', 'invert', 'blur-sm'), 500); body.style.transform = 'none'; body.style.fontSize = '1rem'; document.documentElement.style.cursor = 'none'; } // Reset
-    ];
-
-    function triggerChaos(type) {
-        chaosLevel++;
-        if(type === 'nav-scramble') { const nav = document.querySelector('header div.flex'); Array.from(nav.children).sort(()=>Math.random()-0.5).forEach(b=>nav.appendChild(b)); }
-        else { chaosActions[Math.floor(Math.random()*chaosActions.length)](); }
+    // 3. POINTER POINTER SIMULATION
+    function showPointer() {
+        const ptr = document.getElementById('pointer-image');
+        ptr.style.display = 'block';
+        ptr.style.left = (mouseX - 220) + 'px'; // Positions image pointing at cursor
+        ptr.style.top = (mouseY - 100) + 'px';
     }
+
+    // 4. IMPOSSIBLE FORM LOGIC
+    function moveCheckbox() {
+        const check = document.getElementById('scam-check');
+        check.style.marginLeft = Math.random() * 50 + 'px';
+        check.style.marginTop = Math.random() * 20 + 'px';
+    }
+
+    // 5. WIN POPUP SYSTEM
+    function showWin() {
+        document.getElementById('win-popup').style.display = 'block';
+    }
+
+    function spawnMore() {
+        for(let i=0; i<5; i++) {
+            let clone = document.getElementById('win-popup').cloneNode(true);
+            clone.style.display = 'block';
+            clone.style.top = Math.random() * 80 + '%';
+            clone.style.left = Math.random() * 80 + '%';
+            clone.style.background = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+            document.body.appendChild(clone);
+        }
+    }
+
+    // 6. CHAOS ENGINE (STRESSFUL FUNCTIONS)
     
-    // The Chaos Loop
-    setInterval(() => {
-        if(Math.random() > 0.7) triggerChaos(); // 30% chance every second
-        if(Math.random() > 0.99) triggerGoogleError(); // 1% chance for big error
-    }, 1000);
+    // Tab Prank
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) document.title = "HEY! DON'T LEAVE!";
+        else document.title = "WELCOME BACK TO HELL";
+    });
 
-    // ================= MAJOR EVENTS =================
-    // Portugal Protocol (60s timer)
-    setTimeout(() => { document.getElementById('portugal-modal').style.display = 'flex'; document.getElementById('site-title').innerText = "SISTEMA MUJTABA"; }, 60000);
+    // Right Click Hack
+    document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        alert("Mujtaba has disabled your right-click for 'security' reasons.");
+    });
 
-    // Fake Google Error
-    function triggerGoogleError() {
-        document.getElementById('google-error').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
-
-    // Lockdown (from Survey)
-    function triggerLockdown() {
-        alert("CRITICAL ERROR: Too much data. Initiating system crash.");
-        document.body.innerHTML = '<div class="h-screen w-screen bg-blue-800 text-white flex items-center justify-center text-2xl font-mono">:( Your PC ran into a problem and needs to restart.<br><br>Stop code: MUJTABA_OVERLOAD</div>';
-    }
-
-    // Keyboard Scrambler
+    // Keyboard Scramble
     document.addEventListener('keydown', (e) => {
         if(e.target.tagName === 'INPUT') {
-            e.preventDefault();
-            e.target.value += String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+            if(Math.random() > 0.7) {
+                e.preventDefault();
+                e.target.value += "LOL";
+            }
         }
     });
+
+    // Scroll Sabotage
+    window.addEventListener('scroll', () => {
+        if(Math.random() > 0.95) window.scrollTo(0,0);
+    });
+
+    // Random Invert
+    setInterval(() => {
+        if(Math.random() > 0.98) {
+            document.body.style.filter = "invert(1)";
+            setTimeout(() => document.body.style.filter = "none", 100);
+        }
+    }, 2000);
+
+    // Initial Login Tip
+    console.log("%cSTOP!", "color: red; font-size: 50px; font-weight: bold;");
+    console.log("If Mujtaba told you to paste something here, he is trying to steal your donuts.");
+
 </script>
 
 </body>
